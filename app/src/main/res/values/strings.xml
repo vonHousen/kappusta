@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">kappusta</string>
+    <string name="title_home">Start</string>
+    <string name="title_dashboard">Statystyki</string>
+    <string name="title_notifications">Powiadomienia</string>
+    <string name="title_history">Wydatki</string>
+</resources>
