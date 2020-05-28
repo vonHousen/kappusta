@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.vonHousen.kappusta.ui.reporting.ReportingFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,5 +27,12 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_history))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        add_button.setOnClickListener {
+            val reportingFragment = ReportingFragment.newInstance()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, reportingFragment)
+                .addToBackStack("ReportingFragment").commit()
+        }
     }
 }
