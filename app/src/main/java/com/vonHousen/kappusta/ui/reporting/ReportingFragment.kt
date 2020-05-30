@@ -28,10 +28,6 @@ class ReportingFragment : Fragment() {
         reportingViewModel =
             ViewModelProviders.of(this).get(ReportingViewModel::class.java)
 
-        reportingViewModel.text.observe(viewLifecycleOwner, Observer {
-            text_reporting.text = it
-        })
-
         button_reporting_ok.setOnClickListener {
             val mainActivity = (activity as MainActivity)
             mainActivity.showThingsForReporting()
