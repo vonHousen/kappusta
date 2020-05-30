@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.R
 import kotlinx.android.synthetic.main.fragment_reporting.*
 
 class ReportingFragment : Fragment() {
 
     private lateinit var reportingViewModel: ReportingViewModel
-
-    companion object {
-        fun newInstance() = ReportingFragment()
-    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -37,9 +33,9 @@ class ReportingFragment : Fragment() {
         })
 
         button_reporting_ok.setOnClickListener {
-            (activity as AppCompatActivity).supportFragmentManager
-                .popBackStackImmediate()
-
+            val mainActivity = (activity as MainActivity)
+            mainActivity.showThingsForReporting()
+            mainActivity.onBackPressed()
         }
     }
 

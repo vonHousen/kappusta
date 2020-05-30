@@ -1,13 +1,13 @@
 package com.vonHousen.kappusta
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.vonHousen.kappusta.ui.reporting.ReportingFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,10 +29,27 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         add_button.setOnClickListener {
-            val reportingFragment = ReportingFragment.newInstance()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, reportingFragment)
-                .addToBackStack("ReportingFragment").commit()
+            hideThingsForReporting()
+            navController.navigate(R.id.navigation_reporting)
         }
     }
+
+    private fun hideThingsForReporting() {
+        nav_view.visibility = View.GONE
+        add_button.hide()
+        //supportActionBar?.hide()
+    }
+
+    fun showThingsForReporting() {
+        nav_view.visibility = View.VISIBLE
+        add_button.show()
+        //supportActionBar?.show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        showThingsForReporting()
+    }
+
+
 }
