@@ -37,13 +37,11 @@ class MainActivity : AppCompatActivity() {
     private fun hideThingsForReporting() {
         nav_view.visibility = View.GONE
         add_button.hide()
-        //supportActionBar?.hide()
     }
 
     fun showThingsForReporting() {
         nav_view.visibility = View.VISIBLE
         add_button.show()
-        //supportActionBar?.show()
     }
 
     override fun onBackPressed() {
@@ -51,5 +49,9 @@ class MainActivity : AppCompatActivity() {
         showThingsForReporting()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
 }
