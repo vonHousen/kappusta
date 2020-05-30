@@ -5,15 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.R
+import com.vonHousen.kappusta.ui.history.HistoryViewModel
 import kotlinx.android.synthetic.main.fragment_reporting.*
 
 class ReportingFragment : Fragment() {
 
     private lateinit var reportingViewModel: ReportingViewModel
+    private lateinit var historyViewModel: HistoryViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -27,9 +28,12 @@ class ReportingFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         reportingViewModel =
             ViewModelProviders.of(this).get(ReportingViewModel::class.java)
+        historyViewModel =
+            ViewModelProviders.of(this).get(HistoryViewModel::class.java)
 
         button_reporting_ok.setOnClickListener {
             val mainActivity = (activity as MainActivity)
+            historyViewModel.addPaymentToHistory(reporting_value.text.toString().toFloat())
             mainActivity.showThingsForReporting()
             mainActivity.onBackPressed()
         }

@@ -10,4 +10,11 @@ class HistoryViewModel : ViewModel() {
         value = "This is history Fragment"
     }
     val text: LiveData<String> = _text
+
+    private var paymentList = arrayListOf<Float>()
+
+    fun addPaymentToHistory(newPayment: Float) {
+        paymentList.add(newPayment)
+    }
+
 }
