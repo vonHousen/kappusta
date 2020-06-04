@@ -32,14 +32,18 @@ class ReportingFragment : Fragment() {
             ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
 
         button_reporting_ok.setOnClickListener {
-            val reported =
-                reportingViewModel.processNewPaymentRecord(reporting_edit_text.text.toString())
-            if(reported != null) {
-                historyViewModel.addPaymentToHistory(reported)
-            }
-
-            (activity as MainActivity).showThingsAfterReporting()
+            reportNow()
         }
+
+        // TODO listen to "OK" signal from keyboard
+    }
+
+    private fun reportNow() {
+        val reported =
+            reportingViewModel.processNewPaymentRecord(reporting_edit_text.text.toString())
+        if(reported != null)
+            historyViewModel.addPaymentToHistory(reported)
+        (activity as MainActivity).showThingsAfterReporting()   // TODO hide keyboard
     }
 
 }

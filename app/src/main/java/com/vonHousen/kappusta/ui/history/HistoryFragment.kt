@@ -46,5 +46,6 @@ class HistoryFragment : Fragment() {
                 adapter = customAdapter
             }
         }
+        // TODO else show "empty" textbox or something
     }
 }
