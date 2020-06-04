@@ -1,13 +1,16 @@
 package com.vonHousen.kappusta
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     fun showThingsAfterReporting(withFragmentChange: Boolean = true) {
         nav_view.visibility = View.VISIBLE
         add_button.show()
+        hideKeyboard()
 
         if (withFragmentChange)
             findNavController(R.id.nav_host_fragment).popBackStack()
@@ -58,4 +62,16 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    private fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    private fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

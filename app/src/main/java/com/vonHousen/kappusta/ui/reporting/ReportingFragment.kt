@@ -43,7 +43,7 @@ class ReportingFragment : Fragment() {
             reportingViewModel.processNewPaymentRecord(reporting_edit_text.text.toString())
         if(reported != null)
             historyViewModel.addPaymentToHistory(reported)
-        (activity as MainActivity).showThingsAfterReporting()   // TODO hide keyboard
+        (activity as MainActivity).showThingsAfterReporting()
     }
 
 }
