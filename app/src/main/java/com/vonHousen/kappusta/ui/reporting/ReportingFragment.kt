@@ -29,13 +29,16 @@ class ReportingFragment : Fragment() {
         reportingViewModel =
             ViewModelProviders.of(this).get(ReportingViewModel::class.java)
         historyViewModel =
-            ViewModelProviders.of(this).get(HistoryViewModel::class.java)
+            ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
 
         button_reporting_ok.setOnClickListener {
-            val mainActivity = (activity as MainActivity)
-            historyViewModel.addPaymentToHistory(reporting_value.text.toString().toFloat())
-            mainActivity.showThingsForReporting()
-            mainActivity.onBackPressed()
+            val reported =
+                reportingViewModel.processNewPaymentRecord(reporting_edit_text.text.toString())
+            if(reported != null) {
+                historyViewModel.addPaymentToHistory(reported)
+            }
+
+            (activity as MainActivity).showThingsAfterReporting()
         }
     }
 

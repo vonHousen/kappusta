@@ -3,18 +3,19 @@ package com.vonHousen.kappusta.ui.history
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.vonHousen.kappusta.paymentRecord.PaymentRecord
 
 class HistoryViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is history Fragment"
+    private var paymentList = mutableListOf<PaymentRecord>(
+    )
+    private val _paymentList = MutableLiveData<List<PaymentRecord>>().apply {
+        value = paymentList
     }
-    val text: LiveData<String> = _text
+    val payments: LiveData<List<PaymentRecord>>
+        get() = _paymentList
 
-    private var paymentList = arrayListOf<Float>()
-
-    fun addPaymentToHistory(newPayment: Float) {
+    fun addPaymentToHistory(newPayment: PaymentRecord) {
         paymentList.add(newPayment)
     }
-
 }

@@ -6,4 +6,7 @@
     <string name="title_history">Wydatki</string>
     <string name="reporting_ok_button">zapisz</string>
     <string name="title_reporting">Dodaj nowy wpis</string>
+    <string name="category">Codzienne</string>
+    <string name="date">01-01-2020</string>
+    <string name="reported_how_much">12,99zł</string>
 </resources>
