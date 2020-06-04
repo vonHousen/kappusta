@@ -105,11 +105,11 @@ class ReportingFragment : Fragment() {
             val dpd = DatePickerDialog(
                 activity!!,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    val day: Int = dayOfMonth
-                    val month: Int = monthOfYear
-                    val year: Int = year
+                    val day1: Int = dayOfMonth
+                    val month1: Int = monthOfYear
+                    val year1: Int = year
                     val calendar = Calendar.getInstance()
-                    calendar[year, month] = day
+                    calendar[year1, month1] = day1
 
                     val sdf: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy")
                     val formatedDate: String = sdf.format(calendar.time)
