@@ -1,5 +1,6 @@
 package com.vonHousen.kappusta.ui.reporting
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +14,17 @@ import com.vonHousen.kappusta.R
 import com.vonHousen.kappusta.paymentRecord.Category
 import com.vonHousen.kappusta.ui.history.HistoryViewModel
 import kotlinx.android.synthetic.main.fragment_reporting.*
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.ZoneId
+import java.util.*
+
 
 class ReportingFragment : Fragment() {
 
     private lateinit var reportingViewModel: ReportingViewModel
     private lateinit var historyViewModel: HistoryViewModel
-    private lateinit var selectedDate: LocalDate
+    private var selectedDate: LocalDate = LocalDate.now()
     private lateinit var selectedCategory: Category
     private lateinit var paymentValueTxt: String
 
@@ -38,20 +43,27 @@ class ReportingFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
 
-        button_reporting_ok.setOnClickListener {
-            reportNow()
-        }
+        configureReportingButton() // TODO listen to "OK" signal from keyboard
         configureCategorySpinner()
-
-        // TODO listen to "OK" signal from keyboard
+        configureDatePickerDialog()
     }
 
     private fun reportNow() {
         paymentValueTxt = reporting_payment_edit_text.text.toString()
-        val reported = reportingViewModel.processNewPaymentRecord(paymentValueTxt, selectedCategory)
+        val reported = reportingViewModel.processNewPaymentRecord(
+            paymentValueTxt,
+            selectedCategory,
+            selectedDate
+        )
         if(reported != null)
             historyViewModel.addPaymentToHistory(reported)
         (activity as MainActivity).showThingsAfterReporting()
+    }
+
+    private fun configureReportingButton() {
+        button_reporting_ok.setOnClickListener {
+            reportNow()
+        }
     }
 
     private fun configureCategorySpinner() {
@@ -79,6 +91,34 @@ class ReportingFragment : Fragment() {
             ) {
                 selectedCategory = reportingViewModel.categories[position]
             }
+        }
+    }
+
+    private fun configureDatePickerDialog() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        reporting_date_button.text = selectedDate.toString()
+        reporting_date_button.setOnClickListener {
+            val dpd = DatePickerDialog(
+                activity!!,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    val day: Int = dayOfMonth
+                    val month: Int = monthOfYear
+                    val year: Int = year
+                    val calendar = Calendar.getInstance()
+                    calendar[year, month] = day
+
+                    val sdf: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy")
+                    val formatedDate: String = sdf.format(calendar.time)
+                    selectedDate = sdf.parse(formatedDate)!!.toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate()
+                    reporting_date_button.text = selectedDate.toString()
+
+                }, year, month, day)
+            dpd.show()
         }
     }
 }
