@@ -9,4 +9,8 @@
     <string name="category">Codzienne</string>
     <string name="date">01-01-2020</string>
     <string name="reported_how_much">12,99zł</string>
+    <string-array name="Categories">
+        <item>Codzienne</item>
+        <item>Specjalne</item>
+    </string-array>
 </resources>
