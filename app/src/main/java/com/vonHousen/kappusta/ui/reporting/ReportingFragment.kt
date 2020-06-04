@@ -48,7 +48,7 @@ class ReportingFragment : Fragment() {
 
     private fun reportNow() {
         paymentValueTxt = reporting_payment_edit_text.text.toString()
-        val reported = reportingViewModel.processNewPaymentRecord(paymentValueTxt)
+        val reported = reportingViewModel.processNewPaymentRecord(paymentValueTxt, selectedCategory)
         if(reported != null)
             historyViewModel.addPaymentToHistory(reported)
         (activity as MainActivity).showThingsAfterReporting()
@@ -56,12 +56,12 @@ class ReportingFragment : Fragment() {
 
     private fun configureCategorySpinner() {
 
-        val categoriesArray = resources.getStringArray(R.array.Categories)
+        val categoriesNamesArray = resources.getStringArray(R.array.Categories)
         // Create an ArrayAdapter using a simple spinner layout and languages array
         val arrayAdapter = ArrayAdapter(
             activity!!,
             android.R.layout.simple_spinner_item,
-            categoriesArray
+            categoriesNamesArray
         )
         // Set layout to use when the list of choices appear
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

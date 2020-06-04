@@ -6,9 +6,9 @@ enum class Category {
     DAILY,
     SPECIAL,
     DUMMY
-}
+}   // TODO it should be bounded with names in string.xml
 
-class PaymentRecord(var howMuch: Double) {
+class PaymentRecord(private var howMuch: Double, private var category: Category) {
 
     private val dummyDate = LocalDate.parse("1996-01-01")
 
@@ -32,10 +32,9 @@ class PaymentRecord(var howMuch: Double) {
         }
     }
 
-    var date: LocalDate = dummyDate
-    var category: Category = Category.DUMMY
+    private var date: LocalDate = dummyDate
 
-    constructor(howMuch: Double, date: LocalDate, category: Category) : this(howMuch) {
+    constructor(howMuch: Double, date: LocalDate, category: Category) : this(howMuch, category) {
         this.date = date
         this.category = category
     }

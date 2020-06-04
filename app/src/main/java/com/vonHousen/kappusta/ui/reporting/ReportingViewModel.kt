@@ -11,9 +11,9 @@ class ReportingViewModel : ViewModel() {
         Category.SPECIAL
     )
 
-    fun processNewPaymentRecord(reportingValue: String): PaymentRecord? {
+    fun processNewPaymentRecord(reportingValue: String, category: Category): PaymentRecord? {
         return if(reportingValue != "") {
-            PaymentRecord(reportingValue.toDouble())
+            PaymentRecord(reportingValue.toDouble(), category)
         } else {
             null
         }
