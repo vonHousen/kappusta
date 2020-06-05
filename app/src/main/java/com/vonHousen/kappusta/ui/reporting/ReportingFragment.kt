@@ -49,7 +49,7 @@ class ReportingFragment : Fragment() {
     }
 
     private fun reportNow() {
-        paymentValueTxt = reporting_payment_edit_text.text.toString()
+        paymentValueTxt = reporting_payment_edit_text.editText?.text.toString()
         val reported = reportingViewModel.processNewPaymentRecord(
             paymentValueTxt,
             selectedCategory,
@@ -104,7 +104,7 @@ class ReportingFragment : Fragment() {
         reporting_date_button.setOnClickListener {
             val dpd = DatePickerDialog(
                 activity!!,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     val day1: Int = dayOfMonth
                     val month1: Int = monthOfYear
                     val year1: Int = year

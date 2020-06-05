@@ -23,20 +23,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/reporting_payment_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:hint="@string/reporting_edit_text_hint"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="64dp"
         android:layout_marginBottom="8dp"
-        android:inputType="numberDecimal"
-        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@id/button_reporting_ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reporting_payment_edit_text_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/reporting_date_button"
