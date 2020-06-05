@@ -3,7 +3,7 @@ package com.vonHousen.kappusta.ui.history
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.vonHousen.kappusta.paymentRecord.PaymentRecord
+import com.vonHousen.kappusta.payment.PaymentRecord
 
 
 class ReportingHistoryListAdapter(private val list: List<PaymentRecord>)

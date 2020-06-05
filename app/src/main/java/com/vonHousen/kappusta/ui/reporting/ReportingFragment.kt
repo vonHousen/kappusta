@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.R
-import com.vonHousen.kappusta.paymentRecord.Category
+import com.vonHousen.kappusta.payment.Category
 import com.vonHousen.kappusta.ui.history.HistoryViewModel
 import kotlinx.android.synthetic.main.fragment_reporting.*
 import java.text.SimpleDateFormat

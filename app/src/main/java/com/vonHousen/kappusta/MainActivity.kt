@@ -11,10 +11,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.Room
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.vonHousen.kappusta.db.ReportDB
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        lateinit var db: ReportDB
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +37,13 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_history))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        db = Room.databaseBuilder(
+            applicationContext,
+            ReportDB::class.java,
+            "ReportDB"
+        )
+            .allowMainThreadQueries()   // TODO make it asynchronous
+            .build()
 
         add_button.setOnClickListener {
             hideThingsForReporting()

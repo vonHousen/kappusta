@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vonHousen.kappusta.R
-import com.vonHousen.kappusta.paymentRecord.PaymentRecord
+import com.vonHousen.kappusta.payment.PaymentRecord
 
 class ReportingHistoryViewHolder(inflater: LayoutInflater, parent: ViewGroup)
     : RecyclerView.ViewHolder(

@@ -10,7 +10,7 @@ import com.vonHousen.kappusta.R
 import kotlinx.android.synthetic.main.fragment_history.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.vonHousen.kappusta.paymentRecord.PaymentRecord
+import com.vonHousen.kappusta.payment.PaymentRecord
 
 
 class HistoryFragment : Fragment() {
