@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vonHousen.kappusta.reporting.ExpenseRecord
+import com.vonHousen.kappusta.reporting.ProfitRecord
 import com.vonHousen.kappusta.reporting.ReportRepository
 import com.vonHousen.kappusta.reporting.ReportRecord
 
@@ -21,9 +22,19 @@ class HistoryViewModel : ViewModel() {
         val newReport = ReportRecord(
             newExpense.getDate(),
             -newExpense.getHowMuch(),
-            newExpense.getExpenseTypeString()
+            newExpense.getExpenseType().toString()
         )
         reportList.add(newReport)
         repo.addExpense(newExpense)
+    }
+
+    fun addProfitToHistory(newProfit: ProfitRecord) {
+        val newReport = ReportRecord(
+            newProfit.getDate(),
+            newProfit.getHowMuch(),
+            newProfit.getProfitType().toString()
+        )
+        reportList.add(newReport)
+        repo.addProfit(newProfit)
     }
 }

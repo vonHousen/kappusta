@@ -1,13 +1,12 @@
 package com.vonHousen.kappusta.reporting
 
 import com.vonHousen.kappusta.MainActivity
-import com.vonHousen.kappusta.db.ReportDAO
-import com.vonHousen.kappusta.db.ExpenseEntity
-import com.vonHousen.kappusta.db.ExpenseTypeEntity
+import com.vonHousen.kappusta.db.*
 
 object ReportRepository {
     private val reportDAO: ReportDAO = MainActivity.db.reportDAO()
     private var expenseTypes: MutableList<ExpenseType> = getAllExpenseTypes().toMutableList()
+    private var profitTypes: MutableList<ProfitType> = getAllProfitTypes().toMutableList()
 
     fun addExpense(expenseRecord: ExpenseRecord) {
         val expenseType = expenseRecord.getExpenseType()
@@ -16,6 +15,15 @@ object ReportRepository {
             reportDAO.insertExpenseType(ExpenseTypeEntity(expenseType))
         }
         reportDAO.insertExpense(ExpenseEntity(expenseRecord))
+    }
+
+    fun addProfit(profitRecord: ProfitRecord) {
+        val profitType = profitRecord.getProfitType()
+        if(!profitTypes.contains(profitType) && profitType != null) {
+            profitTypes.add(profitType)
+            reportDAO.insertProfitType(ProfitTypeEntity(profitType))
+        }
+        reportDAO.insertProfit(ProfitEntity(profitRecord))
     }
 
     fun getAllExpenses(): List<ExpenseRecord> {
@@ -38,6 +46,17 @@ object ReportRepository {
             }
         }
         return expensesTypesTmp
+    }
+
+    fun getAllProfitTypes(): List<ProfitType> {
+        val profitTypesTmp = mutableListOf<ProfitType>()
+        val loadedProfitTypes = reportDAO.allProfitTypes
+        if (loadedProfitTypes != null) {
+            for (profitType in loadedProfitTypes) {
+                profitTypesTmp.add(ProfitType.fromID(profitType.profitTypeID)!!)
+            }
+        }
+        return profitTypesTmp
     }
 
     fun getFullReport(): List<ReportRecord> {

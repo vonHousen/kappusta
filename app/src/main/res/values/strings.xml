@@ -9,9 +9,12 @@
     <string name="category">Codzienne</string>
     <string name="date">01-01-2020</string>
     <string name="reported_how_much">12,99zł</string>
-    <string name="reporting_edit_text_hint">Ile zapłaciłaś?</string>
+    <string name="reporting_edit_text_hint">Ile złotych?</string>
     <string-array name="Categories">
-        <item>Codzienne</item>
-        <item>Specjalne</item>
+        <item>Codzienne wydatki</item>
+        <item>Specjalne wydatki</item>
+        <item>Wypłata</item>
+        <item>Bonus</item>
+        <item>Jednorazowy przychód</item>
     </string-array>
 </resources>
