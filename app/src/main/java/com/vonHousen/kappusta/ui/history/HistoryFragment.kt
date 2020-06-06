@@ -10,6 +10,8 @@ import com.vonHousen.kappusta.R
 import kotlinx.android.synthetic.main.fragment_history.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.vonHousen.kappusta.reporting.ReportRecord
 
 
@@ -33,11 +35,14 @@ class HistoryFragment : Fragment() {
         historyViewModel.reports.observe(viewLifecycleOwner, Observer {
             updateRecyclerView(historyViewModel.reports.value)
         })
+
+        configureSwiping()
     }
 
     private fun updateRecyclerView(reportingHistoryList: List<ReportRecord>?) {
         if (reportingHistoryList != null) {
-            val customAdapter = ReportingHistoryListAdapter(reportingHistoryList)
+            val customAdapter =
+                ReportingHistoryListAdapter(reportingHistoryList.toMutableList(), historyViewModel)
             recycler_view_reporting_history.apply {
                 // set a LinearLayoutManager to handle Android
                 // RecyclerView behavior
@@ -47,5 +52,15 @@ class HistoryFragment : Fragment() {
             }
         }
         // TODO else show "empty" textbox or something
+    }
+
+    private fun configureSwiping() {
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = recycler_view_reporting_history.adapter as ReportingHistoryListAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+            }
+        }
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(recycler_view_reporting_history)
     }
 }

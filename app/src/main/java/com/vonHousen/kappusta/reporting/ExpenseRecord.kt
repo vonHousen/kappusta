@@ -51,6 +51,12 @@ class ExpenseRecord(
         date = expenseEntity.date
     )
 
+    constructor(reportRecord: ReportRecord): this(
+        howMuch = -reportRecord.WORTH,
+        expenseType = ExpenseType.valueOf(reportRecord.COMMENT!!),
+        date = reportRecord.DATE
+    )
+
     fun getHowMuch(): Double {
         return howMuch
     }

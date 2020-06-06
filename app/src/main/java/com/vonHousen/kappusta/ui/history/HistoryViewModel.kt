@@ -37,4 +37,9 @@ class HistoryViewModel : ViewModel() {
         reportList.add(newReport)
         repo.addProfit(newProfit)
     }
+
+    fun notifyReportRemoved(position: Int) {
+        val removedItem = reportList.removeAt(position)
+        repo.removeReport(removedItem)
+    }
 }

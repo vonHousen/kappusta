@@ -62,4 +62,11 @@ object ReportRepository {
     fun getFullReport(): List<ReportRecord> {
         return reportDAO.fullReport ?: listOf<ReportRecord>()
     }
+
+    fun removeReport(reportRecord: ReportRecord) {
+        if (reportRecord.WORTH < 0)
+            reportDAO.deleteExpense(ExpenseEntity(ExpenseRecord(reportRecord)))
+        else
+            reportDAO.deleteProfit(ProfitEntity(ProfitRecord(reportRecord)))
+    }
 }

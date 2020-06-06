@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vonHousen.kappusta.reporting.ReportRecord
 
 
-class ReportingHistoryListAdapter(private val list: List<ReportRecord>)
+class ReportingHistoryListAdapter(private val list: MutableList<ReportRecord>,
+                                  private val whomNotify: HistoryViewModel)
     : RecyclerView.Adapter<ReportingHistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportingHistoryViewHolder {
@@ -23,4 +24,10 @@ class ReportingHistoryListAdapter(private val list: List<ReportRecord>)
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun removeAt(position: Int) {
+        list.removeAt(position)
+        whomNotify.notifyReportRemoved(position)
+        notifyItemRemoved(position)
+    }
 }

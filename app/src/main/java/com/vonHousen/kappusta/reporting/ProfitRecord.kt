@@ -28,6 +28,12 @@ class ProfitRecord(
         date = profitEntity.date
     )
 
+    constructor(reportRecord: ReportRecord): this(
+        worth = reportRecord.WORTH,
+        profitType = ProfitType.valueOf(reportRecord.COMMENT!!),
+        date = reportRecord.DATE
+    )
+
     fun getHowMuch(): Double {
         return worth
     }
