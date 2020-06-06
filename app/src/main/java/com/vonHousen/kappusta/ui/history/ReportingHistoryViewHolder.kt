@@ -22,7 +22,7 @@ class ReportingHistoryViewHolder(inflater: LayoutInflater, parent: ViewGroup)
     }
 
     fun bind(expense: ExpenseRecord) {
-        categoryField?.text = expense.getCategoryString()
+        categoryField?.text = expense.getExpenseTypeString()
         dateField?.text = expense.getDateString()
         howMuchField?.text = expense.getHowMuchString()
     }

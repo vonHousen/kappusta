@@ -1,33 +1,42 @@
 package com.vonHousen.kappusta.db
 
 import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 import com.vonHousen.kappusta.reporting.ExpenseRecord
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-@Entity(tableName = "EXPENSES")
+@Entity(
+    tableName = "EXPENSES",
+    foreignKeys = [ForeignKey(
+        entity = ExpenseTypeEntity::class,
+        parentColumns = ["expense_type_id"],
+        childColumns = ["expense_type_id"],
+        onDelete = CASCADE
+    )]
+)
 data class ExpenseEntity(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "expense_id")
-    var id: Int?,
+    var expenseID: Int?,
 
     @ColumnInfo(name = "expense_type_id")
-    var category: Int?,
+    var expenseTypeID: Int?,
 
     @ColumnInfo(name = "worth")
-    var howMuch: Double,
+    var worth: Double,
 
     @ColumnInfo(name = "date")
     var date: LocalDate
 
 ) {
     constructor(reportRecord: ExpenseRecord) : this(
-        id = null,
-        category = reportRecord.getCategoryID(),
-        howMuch = reportRecord.getHowMuch(),
+        expenseID = null,
+        expenseTypeID = reportRecord.getExpenseType()?.ID,
+        worth = reportRecord.getHowMuch(),
         date = reportRecord.getDate()
     )
 }

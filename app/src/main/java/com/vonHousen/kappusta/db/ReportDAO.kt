@@ -9,8 +9,17 @@ interface ReportDAO {
     val allExpenses: List<ExpenseEntity>?
 
     @Insert
-    fun insertReport(vararg expense: ExpenseEntity)
+    fun insertExpense(vararg expense: ExpenseEntity)
 
     @Delete
-    fun deleteReport(vararg expense: ExpenseEntity)
+    fun deleteExpense(vararg expense: ExpenseEntity)
+
+    @get:Query("select * from EXPENSE_TYPES")
+    val allExpenseTypes: List<ExpenseTypeEntity>?
+
+    @Insert
+    fun insertExpenseType(vararg expenseType: ExpenseTypeEntity)
+
+    @Delete
+    fun deleteExpenseType(vararg expenseType: ExpenseTypeEntity)
 }

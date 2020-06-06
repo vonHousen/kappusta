@@ -33,7 +33,7 @@ class ExpenseRecord(
         }
     }
 
-    fun getCategoryString(): String {
+    fun getExpenseTypeString(): String {
         return if (expenseType != null) {
             expenseType.toString()
         } else {
@@ -41,13 +41,17 @@ class ExpenseRecord(
         }
     }
 
-    fun getCategoryID(): Int? {
+    fun getExpenseType(): ExpenseType? {
+        return expenseType
+    }
+
+    fun getExpenseTypeID(): Int? {
         return expenseType?.ID
     }
 
     constructor(expenseEntity: ExpenseEntity): this(
-        howMuch = expenseEntity.howMuch,
-        expenseType = ExpenseType.fromID(expenseEntity.category),
+        howMuch = expenseEntity.worth,
+        expenseType = ExpenseType.fromID(expenseEntity.expenseTypeID),
         date = expenseEntity.date
     )
 
