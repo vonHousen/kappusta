@@ -19,23 +19,25 @@ class HistoryViewModel : ViewModel() {
         get() = _reportList
 
     fun addExpenseToHistory(newExpense: ExpenseRecord) {
+        val addedID = repo.addExpense(newExpense)
         val newReport = ReportRecord(
             newExpense.getDate(),
             -newExpense.getHowMuch(),
-            newExpense.getExpenseType().toString()
+            newExpense.getExpenseType().toString(),
+            addedID
         )
         reportList.add(newReport)
-        repo.addExpense(newExpense)
     }
 
     fun addProfitToHistory(newProfit: ProfitRecord) {
+        val addedID = repo.addProfit(newProfit)
         val newReport = ReportRecord(
             newProfit.getDate(),
             newProfit.getHowMuch(),
-            newProfit.getProfitType().toString()
+            newProfit.getProfitType().toString(),
+            addedID
         )
         reportList.add(newReport)
-        repo.addProfit(newProfit)
     }
 
     fun notifyReportRemoved(position: Int) {

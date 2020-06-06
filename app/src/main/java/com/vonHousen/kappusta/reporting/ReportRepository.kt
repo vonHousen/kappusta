@@ -8,22 +8,22 @@ object ReportRepository {
     private var expenseTypes: MutableList<ExpenseType> = getAllExpenseTypes().toMutableList()
     private var profitTypes: MutableList<ProfitType> = getAllProfitTypes().toMutableList()
 
-    fun addExpense(expenseRecord: ExpenseRecord) {
+    fun addExpense(expenseRecord: ExpenseRecord): Long {
         val expenseType = expenseRecord.getExpenseType()
         if(!expenseTypes.contains(expenseType) && expenseType != null) {
             expenseTypes.add(expenseType)
             reportDAO.insertExpenseType(ExpenseTypeEntity(expenseType))
         }
-        reportDAO.insertExpense(ExpenseEntity(expenseRecord))
+        return reportDAO.insertExpense(ExpenseEntity(expenseRecord))
     }
 
-    fun addProfit(profitRecord: ProfitRecord) {
+    fun addProfit(profitRecord: ProfitRecord): Long {
         val profitType = profitRecord.getProfitType()
         if(!profitTypes.contains(profitType) && profitType != null) {
             profitTypes.add(profitType)
             reportDAO.insertProfitType(ProfitTypeEntity(profitType))
         }
-        reportDAO.insertProfit(ProfitEntity(profitRecord))
+        return reportDAO.insertProfit(ProfitEntity(profitRecord))
     }
 
     fun getAllExpenses(): List<ExpenseRecord> {
@@ -65,8 +65,8 @@ object ReportRepository {
 
     fun removeReport(reportRecord: ReportRecord) {
         if (reportRecord.WORTH < 0)
-            reportDAO.deleteExpense(ExpenseEntity(ExpenseRecord(reportRecord)))
+            reportDAO.deleteExpense(reportRecord.ID)
         else
-            reportDAO.deleteProfit(ProfitEntity(ProfitRecord(reportRecord)))
+            reportDAO.deleteProfit(reportRecord.ID)
     }
 }

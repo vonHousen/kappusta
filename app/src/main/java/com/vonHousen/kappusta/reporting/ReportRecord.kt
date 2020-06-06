@@ -5,7 +5,8 @@ import java.time.LocalDate
 data class ReportRecord(
     var DATE: LocalDate?,
     var WORTH: Double,
-    var COMMENT: String?
+    var COMMENT: String?,
+    var ID: Long
 ) {
 
     // TODO implement explicit constructor
