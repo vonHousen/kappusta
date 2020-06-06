@@ -3,7 +3,7 @@
     <string name="title_home">Start</string>
     <string name="title_dashboard">Statystyki</string>
     <string name="title_notifications">Powiadomienia</string>
-    <string name="title_history">Wydatki</string>
+    <string name="title_history">Rozliczenia</string>
     <string name="reporting_ok_button">zapisz</string>
     <string name="title_reporting">Dodaj nowy wpis</string>
     <string name="category">Codzienne</string>
