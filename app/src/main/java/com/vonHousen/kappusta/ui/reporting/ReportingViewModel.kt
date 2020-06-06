@@ -1,24 +1,24 @@
 package com.vonHousen.kappusta.ui.reporting
 
 import androidx.lifecycle.ViewModel
-import com.vonHousen.kappusta.payment.Category
-import com.vonHousen.kappusta.payment.PaymentRecord
+import com.vonHousen.kappusta.reporting.ExpenseType
+import com.vonHousen.kappusta.reporting.ExpenseRecord
 import java.time.LocalDate
 
 class ReportingViewModel : ViewModel() {
 
     val categories = arrayOf(
-        Category.DAILY,
-        Category.SPECIAL
+        ExpenseType.DAILY,
+        ExpenseType.SPECIAL
     )
 
     fun processNewPaymentRecord(
         reportingValue: String,
-        category: Category,
+        expenseType: ExpenseType,
         date: LocalDate
-    ): PaymentRecord? {
+    ): ExpenseRecord? {
         return if(reportingValue != "") {
-            PaymentRecord(reportingValue.toDouble(), category, date)
+            ExpenseRecord(reportingValue.toDouble(), expenseType, date)
         } else {
             null
         }

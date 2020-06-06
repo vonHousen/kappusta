@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [ReportEntity::class], version = 1)
+@Database(entities = [ExpenseEntity::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class ReportDB : RoomDatabase() {
     abstract fun reportDAO(): ReportDAO

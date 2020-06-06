@@ -5,12 +5,12 @@ import androidx.room.*
 @Dao
 interface ReportDAO {
 
-    @get:Query("select * from PAYMENT_REPORT")
-    val allReports: List<ReportEntity>?
+    @get:Query("select * from EXPENSES")
+    val allExpenses: List<ExpenseEntity>?
 
     @Insert
-    fun insertReport(vararg report: ReportEntity)
+    fun insertReport(vararg expense: ExpenseEntity)
 
     @Delete
-    fun deleteReport(vararg report: ReportEntity)
+    fun deleteReport(vararg expense: ExpenseEntity)
 }

@@ -3,21 +3,21 @@ package com.vonHousen.kappusta.ui.history
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.vonHousen.kappusta.payment.PaymentRecord
-import com.vonHousen.kappusta.payment.PaymentRepository
+import com.vonHousen.kappusta.reporting.ExpenseRecord
+import com.vonHousen.kappusta.reporting.ReportRepository
 
 class HistoryViewModel : ViewModel() {
 
-    private val repo = PaymentRepository
-    private var paymentList = repo.getAll().toMutableList()
-    private val _paymentList = MutableLiveData<List<PaymentRecord>>().apply {
-        value = paymentList
+    private val repo = ReportRepository
+    private var expensesList = repo.getAll().toMutableList()
+    private val _expensesList = MutableLiveData<List<ExpenseRecord>>().apply {
+        value = expensesList
     }
-    val payments: LiveData<List<PaymentRecord>>
-        get() = _paymentList
+    val payments: LiveData<List<ExpenseRecord>>
+        get() = _expensesList
 
-    fun addPaymentToHistory(newPayment: PaymentRecord) {
-        paymentList.add(newPayment)
-        repo.add(newPayment)
+    fun addExpenseToHistory(newExpense: ExpenseRecord) {
+        expensesList.add(newExpense)
+        repo.add(newExpense)
     }
 }

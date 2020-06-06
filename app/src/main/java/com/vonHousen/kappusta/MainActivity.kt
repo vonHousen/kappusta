@@ -37,14 +37,8 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_history))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        db = Room.databaseBuilder(
-            applicationContext,
-            ReportDB::class.java,
-            "ReportDB"
-        )
-            .allowMainThreadQueries()   // TODO make it asynchronous
-            .build()
 
+        configureDatabase()
         add_button.setOnClickListener {
             hideThingsForReporting()
             navController.navigate(R.id.navigation_reporting)
@@ -86,5 +80,16 @@ class MainActivity : AppCompatActivity() {
     private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun configureDatabase() {
+        db = Room.databaseBuilder(
+            applicationContext,
+            ReportDB::class.java,
+            "ReportDB"
+        )
+            .allowMainThreadQueries()   // TODO make it asynchronous
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.R
-import com.vonHousen.kappusta.payment.Category
+import com.vonHousen.kappusta.reporting.ExpenseType
 import com.vonHousen.kappusta.ui.history.HistoryViewModel
 import kotlinx.android.synthetic.main.fragment_reporting.*
 import java.text.SimpleDateFormat
@@ -25,7 +25,7 @@ class ReportingFragment : Fragment() {
     private lateinit var reportingViewModel: ReportingViewModel
     private lateinit var historyViewModel: HistoryViewModel
     private var selectedDate: LocalDate = LocalDate.now()
-    private lateinit var selectedCategory: Category
+    private lateinit var selectedExpenseType: ExpenseType
     private lateinit var paymentValueTxt: String
 
     override fun onCreateView(
@@ -52,11 +52,11 @@ class ReportingFragment : Fragment() {
         paymentValueTxt = reporting_payment_edit_text.editText?.text.toString()
         val reported = reportingViewModel.processNewPaymentRecord(
             paymentValueTxt,
-            selectedCategory,
+            selectedExpenseType,
             selectedDate
         )
         if(reported != null)
-            historyViewModel.addPaymentToHistory(reported)
+            historyViewModel.addExpenseToHistory(reported)
         (activity as MainActivity).showThingsAfterReporting()
     }
 
@@ -89,7 +89,7 @@ class ReportingFragment : Fragment() {
                 parent: AdapterView<*>,
                 view: View, position: Int, id: Long
             ) {
-                selectedCategory = reportingViewModel.categories[position]
+                selectedExpenseType = reportingViewModel.categories[position]
             }
         }
     }

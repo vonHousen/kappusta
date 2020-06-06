@@ -1,32 +1,32 @@
 package com.vonHousen.kappusta.db
 
 import androidx.room.*
-import com.vonHousen.kappusta.payment.PaymentRecord
+import com.vonHousen.kappusta.reporting.ExpenseRecord
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-@Entity(tableName = "PAYMENT_REPORT")
-data class ReportEntity(
+@Entity(tableName = "EXPENSES")
+data class ExpenseEntity(
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "payment_id")
+    @ColumnInfo(name = "expense_id")
     var id: Int?,
 
-    @ColumnInfo(name = "category")
-    var category: String,
+    @ColumnInfo(name = "expense_type_id")
+    var category: Int?,
 
-    @ColumnInfo(name = "how_much")
+    @ColumnInfo(name = "worth")
     var howMuch: Double,
 
     @ColumnInfo(name = "date")
     var date: LocalDate
 
 ) {
-    constructor(reportRecord: PaymentRecord) : this(
+    constructor(reportRecord: ExpenseRecord) : this(
         id = null,
-        category = reportRecord.getCategoryString(),
+        category = reportRecord.getCategoryID(),
         howMuch = reportRecord.getHowMuch(),
         date = reportRecord.getDate()
     )
