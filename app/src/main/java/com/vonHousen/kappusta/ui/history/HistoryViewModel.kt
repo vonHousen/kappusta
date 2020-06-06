@@ -27,6 +27,7 @@ class HistoryViewModel : ViewModel() {
             addedID
         )
         reportList.add(newReport)
+        reportList.sortByDescending { it.DATE }
     }
 
     fun addProfitToHistory(newProfit: ProfitRecord) {
@@ -38,6 +39,7 @@ class HistoryViewModel : ViewModel() {
             addedID
         )
         reportList.add(newReport)
+        reportList.sortByDescending { it.DATE }
     }
 
     fun notifyReportRemoved(position: Int) {
