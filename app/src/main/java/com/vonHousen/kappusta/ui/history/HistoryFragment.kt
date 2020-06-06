@@ -10,7 +10,7 @@ import com.vonHousen.kappusta.R
 import kotlinx.android.synthetic.main.fragment_history.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.vonHousen.kappusta.reporting.ExpenseRecord
+import com.vonHousen.kappusta.reporting.ReportRecord
 
 
 class HistoryFragment : Fragment() {
@@ -30,12 +30,12 @@ class HistoryFragment : Fragment() {
         // RecyclerView node initialized here
         historyViewModel =
             ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
-        historyViewModel.payments.observe(viewLifecycleOwner, Observer {
-            updateRecyclerView(historyViewModel.payments.value)
+        historyViewModel.reports.observe(viewLifecycleOwner, Observer {
+            updateRecyclerView(historyViewModel.reports.value)
         })
     }
 
-    private fun updateRecyclerView(reportingHistoryList: List<ExpenseRecord>?) {
+    private fun updateRecyclerView(reportingHistoryList: List<ReportRecord>?) {
         if (reportingHistoryList != null) {
             val customAdapter = ReportingHistoryListAdapter(reportingHistoryList)
             recycler_view_reporting_history.apply {

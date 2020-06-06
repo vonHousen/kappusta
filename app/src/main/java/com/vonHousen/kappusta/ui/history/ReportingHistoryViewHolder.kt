@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vonHousen.kappusta.R
-import com.vonHousen.kappusta.reporting.ExpenseRecord
+import com.vonHousen.kappusta.reporting.ReportRecord
 
 class ReportingHistoryViewHolder(inflater: LayoutInflater, parent: ViewGroup)
     : RecyclerView.ViewHolder(
@@ -21,9 +21,9 @@ class ReportingHistoryViewHolder(inflater: LayoutInflater, parent: ViewGroup)
         howMuchField = itemView.findViewById(R.id.reporting_history_how_much)
     }
 
-    fun bind(expense: ExpenseRecord) {
-        categoryField?.text = expense.getExpenseTypeString()
-        dateField?.text = expense.getDateString()
-        howMuchField?.text = expense.getHowMuchString()
+    fun bind(report: ReportRecord) {
+        categoryField?.text = report.getCommentString()
+        dateField?.text = report.getDateString()
+        howMuchField?.text = report.getWorthString()
     }
 }

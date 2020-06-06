@@ -5,19 +5,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vonHousen.kappusta.reporting.ExpenseRecord
 import com.vonHousen.kappusta.reporting.ReportRepository
+import com.vonHousen.kappusta.reporting.ReportRecord
 
 class HistoryViewModel : ViewModel() {
 
     private val repo = ReportRepository
-    private var expensesList = repo.getAllExpenses().toMutableList()
-    private val _expensesList = MutableLiveData<List<ExpenseRecord>>().apply {
-        value = expensesList
+    private var reportList = repo.getFullReport().toMutableList()
+    private val _reportList = MutableLiveData<List<ReportRecord>>().apply {
+        value = reportList
     }
-    val payments: LiveData<List<ExpenseRecord>>
-        get() = _expensesList
+    val reports: LiveData<List<ReportRecord>>
+        get() = _reportList
 
     fun addExpenseToHistory(newExpense: ExpenseRecord) {
-        expensesList.add(newExpense)
+        val newReport = ReportRecord(
+            newExpense.getDate(),
+            -newExpense.getHowMuch(),
+            newExpense.getExpenseTypeString()
+        )
+        reportList.add(newReport)
         repo.addExpense(newExpense)
     }
 }

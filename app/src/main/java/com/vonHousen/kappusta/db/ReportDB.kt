@@ -7,9 +7,11 @@ import androidx.room.TypeConverters
 @Database(
     entities = [
         ExpenseEntity::class,
-        ExpenseTypeEntity::class
+        ExpenseTypeEntity::class,
+        ProfitEntity::class,
+        ProfitTypeEntity::class
     ],
-    version = 3
+    version = 4
 )
 @TypeConverters(Converters::class)
 abstract class ReportDB : RoomDatabase() {

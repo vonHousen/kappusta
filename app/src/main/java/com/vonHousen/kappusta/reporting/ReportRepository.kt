@@ -4,7 +4,6 @@ import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.db.ReportDAO
 import com.vonHousen.kappusta.db.ExpenseEntity
 import com.vonHousen.kappusta.db.ExpenseTypeEntity
-import kotlin.math.exp
 
 object ReportRepository {
     private val reportDAO: ReportDAO = MainActivity.db.reportDAO()
@@ -39,5 +38,9 @@ object ReportRepository {
             }
         }
         return expensesTypesTmp
+    }
+
+    fun getFullReport(): List<ReportRecord> {
+        return reportDAO.fullReport ?: listOf<ReportRecord>()
     }
 }

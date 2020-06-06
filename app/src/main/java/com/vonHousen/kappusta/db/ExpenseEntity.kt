@@ -1,7 +1,6 @@
 package com.vonHousen.kappusta.db
 
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
 import com.vonHousen.kappusta.reporting.ExpenseRecord
 import java.time.Instant
 import java.time.LocalDate
@@ -14,7 +13,7 @@ import java.util.*
         entity = ExpenseTypeEntity::class,
         parentColumns = ["expense_type_id"],
         childColumns = ["expense_type_id"],
-        onDelete = CASCADE
+        onDelete = ForeignKey.CASCADE
     )]
 )
 data class ExpenseEntity(

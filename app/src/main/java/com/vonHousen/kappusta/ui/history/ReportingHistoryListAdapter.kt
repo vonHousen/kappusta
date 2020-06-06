@@ -3,10 +3,10 @@ package com.vonHousen.kappusta.ui.history
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.vonHousen.kappusta.reporting.ExpenseRecord
+import com.vonHousen.kappusta.reporting.ReportRecord
 
 
-class ReportingHistoryListAdapter(private val list: List<ExpenseRecord>)
+class ReportingHistoryListAdapter(private val list: List<ReportRecord>)
     : RecyclerView.Adapter<ReportingHistoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportingHistoryViewHolder {
@@ -18,8 +18,8 @@ class ReportingHistoryListAdapter(private val list: List<ExpenseRecord>)
     }
 
     override fun onBindViewHolder(holder: ReportingHistoryViewHolder, position: Int) {
-        val expense: ExpenseRecord = list[position]
-        holder.bind(expense)
+        val report = list[position]
+        holder.bind(report)
     }
 
     override fun getItemCount(): Int = list.size

@@ -45,10 +45,6 @@ class ExpenseRecord(
         return expenseType
     }
 
-    fun getExpenseTypeID(): Int? {
-        return expenseType?.ID
-    }
-
     constructor(expenseEntity: ExpenseEntity): this(
         howMuch = expenseEntity.worth,
         expenseType = ExpenseType.fromID(expenseEntity.expenseTypeID),
