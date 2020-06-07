@@ -31,7 +31,10 @@ class HomeFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
 
+        configureTextBoxes()
+    }
 
+    private fun configureTextBoxes() {
         homeViewModel.textMoney.observe(viewLifecycleOwner, Observer {
             text_home_money_left.text = it
         })
@@ -41,7 +44,11 @@ class HomeFragment : Fragment() {
         homeViewModel.textPercentAvg.observe(viewLifecycleOwner, Observer {
             text_home_percent_avg.text = it
         })
+        historyViewModel.summaryReport.observe(viewLifecycleOwner, Observer {
+            homeViewModel.updateHowMuchMoneyIsLeft(it.howMuchMoneyIsLeft)
+            homeViewModel.updateHowMuchPercentIsLeft(it.howMuchPercentIsLeft)
+            homeViewModel.updateHowMuchPercentAboveAvg(it.howMuchPercentAboveAvg)
+        })
     }
-
 
 }

@@ -6,16 +6,25 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-    private val _textMoney = MutableLiveData<String>().apply {
-        value = "2789.65 zł"
-    }
+    // text_home_money_left
+    private val _textMoney = MutableLiveData<String>()
     val textMoney: LiveData<String> = _textMoney
-    private val _textPercentLeft = MutableLiveData<String>().apply {
-        value = "77%"
+    fun updateHowMuchMoneyIsLeft(moneyLeft: Double) {
+        _textMoney.value = "$moneyLeft zł"
     }
+
+    // text_home_percent_left
+    private val _textPercentLeft = MutableLiveData<String>()
     val textPercentLeft: LiveData<String> = _textPercentLeft
-    private val _textPercentAvg = MutableLiveData<String>().apply {
-        value = "(-7%)"
+    fun updateHowMuchPercentIsLeft(percentLeft: Int) {
+        _textPercentLeft.value = "${percentLeft}%"
     }
+
+    // text_home_percent_avg
+    private val _textPercentAvg = MutableLiveData<String>()
     val textPercentAvg: LiveData<String> = _textPercentAvg
+    fun updateHowMuchPercentAboveAvg(percentAboveAvg: Int) {
+        _textPercentAvg.value = "(${percentAboveAvg}%)"
+    }
+
 }
