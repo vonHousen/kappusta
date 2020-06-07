@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class HomeViewModel : ViewModel() {
 
     private val _textMoney = MutableLiveData<String>().apply {
-        value = "700.77 zł"
+        value = "1789.65 zł"
     }
     val textMoney: LiveData<String> = _textMoney
     private val _textPercentLeft = MutableLiveData<String>().apply {
