@@ -17,7 +17,7 @@ class HistoryViewModel : ViewModel() {
         get() = _reportList
 
     private val _summaryReport = MutableLiveData<SummaryReport>().apply {
-        value = SummaryReport(2789.65,77,-7)    // TODO bound it!
+        value = repo.getSummaryReport()
     }
     val summaryReport: LiveData<SummaryReport>
         get() = _summaryReport
@@ -32,6 +32,7 @@ class HistoryViewModel : ViewModel() {
         )
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
+        _summaryReport.value = repo.getSummaryReport()
     }
 
     fun addProfitToHistory(newProfit: ProfitRecord) {
@@ -44,10 +45,12 @@ class HistoryViewModel : ViewModel() {
         )
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
+        _summaryReport.value = repo.getSummaryReport()
     }
 
     fun notifyReportRemoved(position: Int) {
         val removedItem = reportList.removeAt(position)
         repo.removeReport(removedItem)
+        _summaryReport.value = repo.getSummaryReport()
     }
 }

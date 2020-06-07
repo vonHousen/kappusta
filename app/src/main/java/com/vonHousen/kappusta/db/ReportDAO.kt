@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.vonHousen.kappusta.reporting.ReportRecord
+import java.time.LocalDate
 
 @Dao
 interface ReportDAO {
@@ -71,4 +72,18 @@ interface ReportDAO {
     """)
     val fullReport: List<ReportRecord>?
 
+    @Query("""
+        select
+            1000.0 - sum(worth)             MONEY_LEFT
+        ,   (1000.0 - sum(worth))/1000.0    FRACTION_LEFT
+        from EXPENSES
+        where date between :startDate and :endDate
+    """)
+    fun howMuchMoneyIsLeft(startDate: LocalDate, endDate: LocalDate): LeftMoneyQueryResult     // TODO use real budget
+
 }
+
+data class LeftMoneyQueryResult (
+    val MONEY_LEFT: Double,
+    val FRACTION_LEFT: Double
+)

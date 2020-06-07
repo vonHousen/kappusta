@@ -28,7 +28,7 @@ data class ExpenseEntity(
     @ColumnInfo(name = "worth")
     var worth: Double,
 
-    @ColumnInfo(name = "date")
+    @ColumnInfo(name = "date")  // TODO think about indexing it
     var date: LocalDate
 
 ) {

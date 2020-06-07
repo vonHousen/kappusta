@@ -24,7 +24,10 @@ class HomeViewModel : ViewModel() {
     private val _textPercentAvg = MutableLiveData<String>()
     val textPercentAvg: LiveData<String> = _textPercentAvg
     fun updateHowMuchPercentAboveAvg(percentAboveAvg: Int) {
-        _textPercentAvg.value = "(${percentAboveAvg}%)"
+        var percentAboveAvgTxt = percentAboveAvg.toString()
+        if (percentAboveAvg > 0)
+            percentAboveAvgTxt = "+$percentAboveAvgTxt"
+        _textPercentAvg.value = "(${percentAboveAvgTxt}%)"
     }
 
 }

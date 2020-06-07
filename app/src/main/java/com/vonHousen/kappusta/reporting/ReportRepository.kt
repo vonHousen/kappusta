@@ -2,6 +2,8 @@ package com.vonHousen.kappusta.reporting
 
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.db.*
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 object ReportRepository {
     private val reportDAO: ReportDAO = MainActivity.db.reportDAO()
@@ -68,5 +70,23 @@ object ReportRepository {
             reportDAO.deleteExpense(reportRecord.ID)
         else
             reportDAO.deleteProfit(reportRecord.ID)
+    }
+
+    fun getSummaryReport(): SummaryReport {
+        val today: LocalDate = LocalDate.now()
+        val firstDayOfCurrentMonth: LocalDate = today.withDayOfMonth(1)
+        val lastDayOfCurrentMonth: LocalDate = today.withDayOfMonth(today.lengthOfMonth())
+        val leftMoneyTuple =
+            reportDAO.howMuchMoneyIsLeft(firstDayOfCurrentMonth, lastDayOfCurrentMonth)
+        val moneyLeft = leftMoneyTuple.MONEY_LEFT
+        val fractionLeft = leftMoneyTuple.FRACTION_LEFT
+        val fractionOfMonth = today.until(lastDayOfCurrentMonth, ChronoUnit.DAYS).toDouble() /
+                firstDayOfCurrentMonth.until(lastDayOfCurrentMonth, ChronoUnit.DAYS)
+
+        return SummaryReport(
+            moneyLeft,
+            (100 * fractionLeft).toInt(),
+            (100 * (fractionLeft - fractionOfMonth)).toInt()
+        )
     }
 }
