@@ -32,7 +32,7 @@ class HistoryViewModel : ViewModel() {
         )
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
-        _summaryReport.value = repo.getSummaryReport()
+        _summaryReport.value = repo.getSummaryReport()      // TODO you don't need to query db again
     }
 
     fun addProfitToHistory(newProfit: ProfitRecord) {
@@ -45,12 +45,12 @@ class HistoryViewModel : ViewModel() {
         )
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
-        _summaryReport.value = repo.getSummaryReport()
+        _summaryReport.value = repo.getSummaryReport()      // TODO you don't need to query db again
     }
 
     fun notifyReportRemoved(position: Int) {
         val removedItem = reportList.removeAt(position)
         repo.removeReport(removedItem)
-        _summaryReport.value = repo.getSummaryReport()
+        _summaryReport.value = repo.getSummaryReport()      // TODO you don't need to query db again
     }
 }

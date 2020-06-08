@@ -12,6 +12,7 @@
     <string name="reporting_edit_text_hint">Ile złotych?</string>
     <string name="home_title">W tym miesiącu zostało Ci</string>
     <string name="home_percent_title">założonego budżetu</string>
+    <string name="title_settings">Ustawienia</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>
