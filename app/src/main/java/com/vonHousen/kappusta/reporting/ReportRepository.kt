@@ -89,4 +89,11 @@ object ReportRepository {
             (100 * (fractionLeft - fractionOfMonth)).toInt()
         )
     }
+
+    fun getCurrentBudget(): Double {
+        return 1000.0
+    }
+
+    fun setCurrentBudget(money: Double) {
+    }
 }

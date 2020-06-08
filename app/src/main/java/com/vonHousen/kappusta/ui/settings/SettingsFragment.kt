@@ -27,9 +27,19 @@ class SettingsFragment : Fragment() {
         settingsViewModel =
             ViewModelProviders.of(this).get(SettingsViewModel::class.java)
 
-        settingsViewModel.text.observe(viewLifecycleOwner, Observer {
-            text_settings.text = it
+        configureSettingBudgetFields()
+    }
+
+    private fun configureSettingBudgetFields() {
+        settingsViewModel.textMoneyBudget.observe(viewLifecycleOwner, Observer {
+                setting_budget_edit_text.editText?.setText(it)
         })
+        setting_budget_edit_text.setEndIconOnClickListener {
+            val inputTxt = setting_budget_edit_text.editText?.text.toString()
+            val oldTxt = settingsViewModel.textMoneyBudget.value.toString()
+            if (inputTxt != oldTxt)     // TODO need to compare real currency here
+                settingsViewModel.updateBudgetTxt(inputTxt.toDouble())
+        }
     }
 
 }
