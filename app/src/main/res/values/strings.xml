@@ -13,6 +13,9 @@
     <string name="home_title">W tym miesiącu zostało Ci</string>
     <string name="home_percent_title">założonego budżetu</string>
     <string name="title_settings">Ustawienia</string>
+    <string name="set_budget">Ustaw swój budżet na ten miesiąc</string>
+    <string name="setting_budget_text_hint">Ile złotych?</string>
+    <string name="set_budget_description_end_icon">Ustaw</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>
