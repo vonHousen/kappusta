@@ -1,9 +1,6 @@
 package com.vonHousen.kappusta.db
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.vonHousen.kappusta.reporting.ReportRecord
 import java.time.LocalDate
 
@@ -74,12 +71,21 @@ interface ReportDAO {
 
     @Query("""
         select
-            1000.0 - sum(worth)             MONEY_LEFT
-        ,   (1000.0 - sum(worth))/1000.0    FRACTION_LEFT
+            sum(worth)                     MONEY_SPENT
         from EXPENSES
         where date between :startDate and :endDate
     """)
-    fun howMuchMoneyIsLeft(startDate: LocalDate, endDate: LocalDate): LeftMoneyQueryResult     // TODO use real budget
+    fun howMuchMoneyIsSpentBetween(startDate: LocalDate, endDate: LocalDate): Double
+
+    @Query("""
+        select budget_worth
+        from BUDGET
+        where first_day_date = :firstDayDate
+    """)
+    fun getCurrentBudget(firstDayDate: LocalDate): Double?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun setCurrentBudget(budgetEntity: BudgetEntity)
 
 }
 

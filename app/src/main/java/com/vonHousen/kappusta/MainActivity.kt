@@ -12,6 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vonHousen.kappusta.db.ReportDB
 import kotlinx.android.synthetic.main.activity_main.*
@@ -79,18 +81,38 @@ class MainActivity : AppCompatActivity() {
         hideKeyboard(currentFocus ?: View(this))
     }
 
+    fun hideKeyboardPublic() {
+        hideKeyboard()
+    }
+
     private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun configureDatabase() {
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("""
+                    drop table 'BUDGET';
+                """)
+                database.execSQL("""
+                    create table 'BUDGET' (
+                        first_day_date  INTEGER not null
+                    ,   budget_worth    REAL not null
+                    ,   primary key (first_day_date)
+                    );
+                """)
+            }
+        }
+
         db = Room.databaseBuilder(
             applicationContext,
             ReportDB::class.java,
             "ReportDB"
         )
             .allowMainThreadQueries()   // TODO make it asynchronous
+            .addMigrations(MIGRATION_5_6)
             .fallbackToDestructiveMigration()
             .build()
     }

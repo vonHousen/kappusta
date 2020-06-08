@@ -9,6 +9,10 @@ object ReportRepository {
     private val reportDAO: ReportDAO = MainActivity.db.reportDAO()
     private var expenseTypes: MutableList<ExpenseType> = getAllExpenseTypes().toMutableList()
     private var profitTypes: MutableList<ProfitType> = getAllProfitTypes().toMutableList()
+    private val today: LocalDate = LocalDate.now()
+    private val firstDayOfCurrentMonth: LocalDate = today.withDayOfMonth(1)
+    private val lastDayOfCurrentMonth: LocalDate = today.withDayOfMonth(today.lengthOfMonth())
+
 
     fun addExpense(expenseRecord: ExpenseRecord): Long {
         val expenseType = expenseRecord.getExpenseType()
@@ -73,27 +77,30 @@ object ReportRepository {
     }
 
     fun getSummaryReport(): SummaryReport {
-        val today: LocalDate = LocalDate.now()
-        val firstDayOfCurrentMonth: LocalDate = today.withDayOfMonth(1)
-        val lastDayOfCurrentMonth: LocalDate = today.withDayOfMonth(today.lengthOfMonth())
-        val leftMoneyTuple =
-            reportDAO.howMuchMoneyIsLeft(firstDayOfCurrentMonth, lastDayOfCurrentMonth)
-        val moneyLeft = leftMoneyTuple.MONEY_LEFT
-        val fractionLeft = leftMoneyTuple.FRACTION_LEFT
-        val fractionOfMonth = today.until(lastDayOfCurrentMonth, ChronoUnit.DAYS).toDouble() /
-                firstDayOfCurrentMonth.until(lastDayOfCurrentMonth, ChronoUnit.DAYS)
+        val currentBudget = getCurrentBudget()
+        val moneyLeft = currentBudget -
+            reportDAO.howMuchMoneyIsSpentBetween(firstDayOfCurrentMonth, lastDayOfCurrentMonth)
 
-        return SummaryReport(
-            moneyLeft,
-            (100 * fractionLeft).toInt(),
-            (100 * (fractionLeft - fractionOfMonth)).toInt()
-        )
+        if (currentBudget > 0.0) {
+            val fractionLeft = moneyLeft / currentBudget
+            val fractionOfMonth = today.until(lastDayOfCurrentMonth, ChronoUnit.DAYS).toDouble() /
+                    firstDayOfCurrentMonth.until(lastDayOfCurrentMonth, ChronoUnit.DAYS)
+
+            return SummaryReport(
+                moneyLeft,
+                (100 * fractionLeft).toInt(),
+                (100 * (fractionLeft - fractionOfMonth)).toInt()
+            )
+        } else {
+            return SummaryReport(moneyLeft, 0, 0)
+        }
     }
 
     fun getCurrentBudget(): Double {
-        return 1000.0
+        return reportDAO.getCurrentBudget(firstDayOfCurrentMonth) ?: 0.0
     }
 
     fun setCurrentBudget(money: Double) {
+        reportDAO.setCurrentBudget(BudgetEntity(firstDayOfCurrentMonth, money))
     }
 }
