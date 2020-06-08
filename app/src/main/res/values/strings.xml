@@ -17,12 +17,15 @@
     <string name="setting_budget_text_hint">Ile złotych?</string>
     <string name="set_budget_description_end_icon">Ustaw</string>
     <string name="currency_txt">zł</string>
-    <string name="dashboard_avg_txt">Średnio, wydano każdego dnia w tym miesiącu</string>
+    <string name="dashboard_avg_txt">Średnio, każdego dnia wydawano</string>
     <string name="dashboard_avg_daily_title">na codzienne</string>
     <string name="dashboard_avg_daily_and_special_title">na codzienne+specjalne</string>
     <string name="dashboard_salary_txt">Do najbliższej wypłaty potrzeba</string>
     <string name="dashboard_salary_days_title">dni</string>
     <string name="dashboard_salary_money_left_title">pieniędzy</string>
+    <string name="dashboard_graph_title">Tempo wydawania pieniędzy</string>
+    <string name="data_series_predicted_title">Przewidywane</string>
+    <string name="data_series_spending_title">W rzeczywistości</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vonHousen.kappusta.reporting.*
+import java.time.LocalDate
 
 class HistoryViewModel : ViewModel() {
 
@@ -27,6 +28,23 @@ class HistoryViewModel : ViewModel() {
     }
     val statisticsReport: LiveData<StatisticsReport>
         get() = _statisticsReport
+
+    private val _spendingCurve = MutableLiveData<SpendingCurveData>().apply {
+        val tmp = listOf<Pair<LocalDate, Money>>(       // TODO get it up-to-date
+            Pair(LocalDate.parse("2020-06-01"), Money(1000)),
+            Pair(LocalDate.parse("2020-06-02"), Money(990)),
+            Pair(LocalDate.parse("2020-06-03"), Money(980)),
+            Pair(LocalDate.parse("2020-06-04"), Money(970)),
+            Pair(LocalDate.parse("2020-06-05"), Money(960)),
+            Pair(LocalDate.parse("2020-06-06"), Money(950)),
+            Pair(LocalDate.parse("2020-06-07"), Money(940)),
+            Pair(LocalDate.parse("2020-06-08"), Money(930)),
+            Pair(LocalDate.parse("2020-06-09"), Money(920))
+        )
+        value = SpendingCurveData(tmp.toTypedArray(), Money(1000))
+    }
+    val spendingCurve: LiveData<SpendingCurveData>
+        get() = _spendingCurve
 
     fun addExpenseToHistory(newExpense: ExpenseRecord) {
         val addedID = repo.addExpense(newExpense)
@@ -71,3 +89,8 @@ class HistoryViewModel : ViewModel() {
         _statisticsReport.value = repo.getStatisticsReport()    // TODO you don't need to query db again
     }
 }
+
+data class SpendingCurveData (
+    val spendingCurve: Array<Pair<LocalDate, Money>>?,
+    val budget: Money
+)
