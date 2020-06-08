@@ -1,6 +1,7 @@
 package com.vonHousen.kappusta.db
 
 import androidx.room.*
+import com.vonHousen.kappusta.reporting.Money
 import com.vonHousen.kappusta.reporting.ProfitRecord
 import java.time.LocalDate
 
@@ -23,7 +24,7 @@ data class ProfitEntity (
     var profitTypeID: Int?,
 
     @ColumnInfo(name = "worth")
-    var worth: Double,
+    var worth: Money,
 
     @ColumnInfo(name = "date")
     var date: LocalDate

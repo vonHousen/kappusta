@@ -2,6 +2,7 @@ package com.vonHousen.kappusta.db
 
 import androidx.room.*
 import com.vonHousen.kappusta.reporting.ExpenseRecord
+import com.vonHousen.kappusta.reporting.Money
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -26,17 +27,17 @@ data class ExpenseEntity(
     var expenseTypeID: Int?,
 
     @ColumnInfo(name = "worth")
-    var worth: Double,
+    var worth: Money,
 
     @ColumnInfo(name = "date")  // TODO think about indexing it
     var date: LocalDate
 
 ) {
-    constructor(reportRecord: ExpenseRecord) : this(
+    constructor(expenseRecord: ExpenseRecord) : this(
         expenseID = null,
-        expenseTypeID = reportRecord.getExpenseType()?.ID,
-        worth = reportRecord.getHowMuch(),
-        date = reportRecord.getDate()
+        expenseTypeID = expenseRecord.getExpenseType()?.ID,
+        worth = expenseRecord.getHowMuch(),
+        date = expenseRecord.getDate()
     )
 }
 
@@ -54,5 +55,15 @@ class Converters {
         val date: Date? =
             Date.from(localDate?.atStartOfDay()?.atZone(ZoneId.systemDefault())?.toInstant())
         return date?.time?.toLong()
+    }
+
+    @TypeConverter
+    fun moneyToReal(money: Money): Double {
+        return money.value.toDouble()
+    }
+
+    @TypeConverter
+    fun realToMoney(money: Double): Money {
+        return Money(money)
     }
 }

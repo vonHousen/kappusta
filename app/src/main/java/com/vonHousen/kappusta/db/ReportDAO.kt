@@ -1,6 +1,7 @@
 package com.vonHousen.kappusta.db
 
 import androidx.room.*
+import com.vonHousen.kappusta.reporting.Money
 import com.vonHousen.kappusta.reporting.ReportRecord
 import java.time.LocalDate
 
@@ -75,21 +76,16 @@ interface ReportDAO {
         from EXPENSES
         where date between :startDate and :endDate
     """)
-    fun howMuchMoneyIsSpentBetween(startDate: LocalDate, endDate: LocalDate): Double
+    fun howMuchMoneyIsSpentBetween(startDate: LocalDate, endDate: LocalDate): Money
 
     @Query("""
         select budget_worth
         from BUDGET
         where first_day_date = :firstDayDate
     """)
-    fun getCurrentBudget(firstDayDate: LocalDate): Double?
+    fun getCurrentBudget(firstDayDate: LocalDate): Money?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setCurrentBudget(budgetEntity: BudgetEntity)
 
 }
-
-data class LeftMoneyQueryResult (
-    val MONEY_LEFT: Double,
-    val FRACTION_LEFT: Double
-)

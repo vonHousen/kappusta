@@ -17,7 +17,7 @@ enum class ProfitType(val ID: Int) {
 }   // TODO it should be bounded with names in string.xml
 
 class ProfitRecord(
-    private var worth: Double,
+    private var worth: Money,
     private var profitType: ProfitType?,
     private var date: LocalDate?
 ) {
@@ -34,7 +34,7 @@ class ProfitRecord(
         date = reportRecord.DATE
     )
 
-    fun getHowMuch(): Double {
+    fun getHowMuch(): Money {
         return worth
     }
 

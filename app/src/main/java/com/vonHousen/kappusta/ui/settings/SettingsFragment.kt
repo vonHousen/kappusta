@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.R
+import com.vonHousen.kappusta.reporting.Money
 import com.vonHousen.kappusta.ui.history.HistoryViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -47,7 +48,7 @@ class SettingsFragment : Fragment() {
                 inputTxt = "0.0"
             val oldTxt = settingsViewModel.textMoneyBudget.value.toString()
             if (inputTxt != oldTxt)     // TODO need to compare real currency here
-                settingsViewModel.updateBudgetTxt(inputTxt.toDouble())
+                settingsViewModel.updateBudgetTxt(Money(inputTxt))
                 historyViewModel.updateSummaryReport()
             (activity as MainActivity).hideKeyboardPublic()
         }

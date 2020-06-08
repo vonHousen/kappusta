@@ -1,10 +1,7 @@
 package com.vonHousen.kappusta.ui.reporting
 
 import androidx.lifecycle.ViewModel
-import com.vonHousen.kappusta.reporting.ExpenseType
-import com.vonHousen.kappusta.reporting.ExpenseRecord
-import com.vonHousen.kappusta.reporting.ProfitRecord
-import com.vonHousen.kappusta.reporting.ProfitType
+import com.vonHousen.kappusta.reporting.*
 import java.time.LocalDate
 
 class ReportingViewModel : ViewModel() {
@@ -23,7 +20,7 @@ class ReportingViewModel : ViewModel() {
         date: LocalDate
     ): ExpenseRecord? {
         return if(reportingValue != "") {
-            ExpenseRecord(reportingValue.toDouble(), expenseType, date)
+            ExpenseRecord(Money(reportingValue), expenseType, date)
         } else {
             null
         }
@@ -35,7 +32,7 @@ class ReportingViewModel : ViewModel() {
         date: LocalDate
     ): ProfitRecord? {
         return if(reportingValue != "") {
-            ProfitRecord(reportingValue.toDouble(), profitType, date)
+            ProfitRecord(Money(reportingValue), profitType, date)
         } else {
             null
         }

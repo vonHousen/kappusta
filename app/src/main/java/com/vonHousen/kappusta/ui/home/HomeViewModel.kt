@@ -3,13 +3,14 @@ package com.vonHousen.kappusta.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.vonHousen.kappusta.reporting.Money
 
 class HomeViewModel : ViewModel() {
 
     // text_home_money_left
     private val _textMoney = MutableLiveData<String>()
     val textMoney: LiveData<String> = _textMoney
-    fun updateHowMuchMoneyIsLeft(moneyLeft: Double) {
+    fun updateHowMuchMoneyIsLeft(moneyLeft: Money) {
         _textMoney.value = "$moneyLeft zł"
     }
 

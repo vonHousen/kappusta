@@ -1,6 +1,7 @@
 package com.vonHousen.kappusta.db
 
 import androidx.room.*
+import com.vonHousen.kappusta.reporting.Money
 import java.time.LocalDate
 
 @Entity(
@@ -13,6 +14,6 @@ data class BudgetEntity (
     var firstDayDate: LocalDate,
 
     @ColumnInfo(name = "budget_worth")
-    var budgetWorth: Double
+    var budgetWorth: Money
 
 )

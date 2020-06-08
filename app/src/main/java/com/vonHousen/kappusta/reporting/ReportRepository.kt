@@ -77,8 +77,8 @@ object ReportRepository {
     }
 
     fun getSummaryReport(): SummaryReport {
-        val currentBudget = getCurrentBudget()
-        val moneyLeft = currentBudget -
+        val currentBudget : Money = getCurrentBudget()
+        val moneyLeft : Money = currentBudget -
             reportDAO.howMuchMoneyIsSpentBetween(firstDayOfCurrentMonth, lastDayOfCurrentMonth)
 
         if (currentBudget > 0.0) {
@@ -96,11 +96,11 @@ object ReportRepository {
         }
     }
 
-    fun getCurrentBudget(): Double {
-        return reportDAO.getCurrentBudget(firstDayOfCurrentMonth) ?: 0.0
+    fun getCurrentBudget(): Money {
+        return reportDAO.getCurrentBudget(firstDayOfCurrentMonth) ?: Money(0.0)
     }
 
-    fun setCurrentBudget(money: Double) {
+    fun setCurrentBudget(money: Money) {
         reportDAO.setCurrentBudget(BudgetEntity(firstDayOfCurrentMonth, money))
     }
 }
