@@ -27,9 +27,24 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
             ViewModelProviders.of(this).get(DashboardViewModel::class.java)
 
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            text_dashboard.text = it
-        })
+        configureTxtAvg()
+        configureTxtSalary()
     }
 
+    private fun configureTxtAvg() {
+        dashboardViewModel.avgDaily.observe(viewLifecycleOwner, Observer {
+            dashboard_avg_daily.text = it
+        })
+        dashboardViewModel.avgDailyAndSpecial.observe(viewLifecycleOwner, Observer {
+            dashboard_avg_daily_and_special.text = it
+        })
+    }
+    private fun configureTxtSalary() {
+        dashboardViewModel.daysToSalary.observe(viewLifecycleOwner, Observer {
+            dashboard_salary_days.text = it
+        })
+        dashboardViewModel.moneyLeftToSalary.observe(viewLifecycleOwner, Observer {
+            dashboard_salary_money_left.text = it
+        })
+    }
 }
