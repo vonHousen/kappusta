@@ -11,7 +11,7 @@ class HomeViewModel : ViewModel() {
     private val _textMoney = MutableLiveData<String>()
     val textMoney: LiveData<String> = _textMoney
     fun updateHowMuchMoneyIsLeft(moneyLeft: Money) {
-        _textMoney.value = "$moneyLeft zł"
+        _textMoney.value = moneyLeft.getTxtWithCurrency()
     }
 
     // text_home_percent_left

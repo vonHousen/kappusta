@@ -21,30 +21,6 @@ class ExpenseRecord(
     private var date: LocalDate?
 ) {
 
-    fun getHowMuchString(): String {
-        return "$howMuch zł"    // TODO formatting
-    }
-
-    fun getDateString(): String {
-        return if (date != null) {
-            date.toString()
-        } else {
-            "unknown date"
-        }
-    }
-
-    fun getExpenseTypeString(): String {
-        return if (expenseType != null) {
-            expenseType.toString()
-        } else {
-            "unknown category"
-        }
-    }
-
-    fun getExpenseType(): ExpenseType? {
-        return expenseType
-    }
-
     constructor(expenseEntity: ExpenseEntity): this(
         howMuch = expenseEntity.worth,
         expenseType = ExpenseType.fromID(expenseEntity.expenseTypeID),
@@ -63,5 +39,9 @@ class ExpenseRecord(
 
     fun getDate(): LocalDate {
         return date ?: LocalDate.now()
+    }
+
+    fun getExpenseType(): ExpenseType? {
+        return expenseType
     }
 }

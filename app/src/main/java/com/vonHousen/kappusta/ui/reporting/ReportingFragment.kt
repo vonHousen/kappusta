@@ -92,9 +92,7 @@ class ReportingFragment : Fragment() {
         reporting_type_spinner!!.adapter = arrayAdapter
         reporting_type_spinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(
                 parent: AdapterView<*>,

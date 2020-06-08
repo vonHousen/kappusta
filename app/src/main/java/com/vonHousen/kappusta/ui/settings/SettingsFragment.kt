@@ -43,12 +43,10 @@ class SettingsFragment : Fragment() {
                 setting_budget_edit_text.editText?.setText(it)
         })
         setting_budget_edit_text.setEndIconOnClickListener {
-            var inputTxt = setting_budget_edit_text.editText?.text.toString()
-            if (inputTxt == "")
-                inputTxt = "0.0"
-            val oldTxt = settingsViewModel.textMoneyBudget.value.toString()
-            if (inputTxt != oldTxt)     // TODO need to compare real currency here
-                settingsViewModel.updateBudgetTxt(Money(inputTxt))
+            val inputVal = Money(setting_budget_edit_text.editText?.text.toString())
+            val oldVal = settingsViewModel.getMoneyBudget()
+            if (inputVal != oldVal)
+                settingsViewModel.updateBudgetTxt(inputVal)
                 historyViewModel.updateSummaryReport()
             (activity as MainActivity).hideKeyboardPublic()
         }

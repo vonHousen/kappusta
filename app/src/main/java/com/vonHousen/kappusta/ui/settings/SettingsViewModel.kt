@@ -14,6 +14,7 @@ class SettingsViewModel : ViewModel() {
         value = repo.getCurrentBudget().toString()
     }
     private var moneyBudget: Money = repo.getCurrentBudget()
+    fun getMoneyBudget() : Money = moneyBudget
     val textMoneyBudget: LiveData<String> = _textMoneyBudget
     fun updateBudgetTxt(money: Money) {
         _textMoneyBudget.value = "$money"

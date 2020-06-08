@@ -5,9 +5,19 @@ import java.math.RoundingMode
 
 class Money(money: BigDecimal) {
     val value : BigDecimal = money.setScale(2, RoundingMode.HALF_EVEN)
+    private val currency: String = "zł"     // TODO bound it with string.xml
+
+    fun getTxtWithCurrency() : String {
+        return "$value $currency"
+    }
 
     constructor(moneyValue: Double) : this(moneyValue.toBigDecimal())
-    constructor(moneyValue: String) : this(moneyValue.toBigDecimal())
+    constructor(moneyValue: String) : this(
+        if (moneyValue != "")
+            moneyValue.toBigDecimal()
+        else
+            0.0.toBigDecimal()
+    )
 
     operator fun plus(other: Money) = Money(value + other.value)
     operator fun minus(other: Money) = Money(value - other.value)

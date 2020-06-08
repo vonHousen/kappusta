@@ -9,10 +9,8 @@ data class ReportRecord(
     var ID: Long
 ) {
 
-    // TODO implement explicit constructor
-
     fun getWorthString(): String {
-        return "$WORTH zł"    // TODO formatting
+        return WORTH.getTxtWithCurrency()
     }
 
     fun getDateString(): String {
