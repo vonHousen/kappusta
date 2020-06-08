@@ -12,6 +12,8 @@ class Money(money: BigDecimal) {
     }
 
     constructor(moneyValue: Double) : this(moneyValue.toBigDecimal())
+    constructor(moneyValue: Int) : this(moneyValue.toBigDecimal())
+    constructor(moneyValue: Long) : this(moneyValue.toBigDecimal())
     constructor(moneyValue: String) : this(
         if (moneyValue != "")
             moneyValue.toBigDecimal()
@@ -22,6 +24,7 @@ class Money(money: BigDecimal) {
     operator fun plus(other: Money) = Money(value + other.value)
     operator fun minus(other: Money) = Money(value - other.value)
     operator fun div(other: Money) = value.toDouble() / other.value.toDouble()
+    operator fun div(other: Long) = Money(value.toDouble() / other.toDouble())
     operator fun unaryMinus(): Money = Money(-value)
     operator fun compareTo(other: Int): Int = value.compareTo(other.toBigDecimal())
     operator fun compareTo(other: Double): Int = value.compareTo(other.toBigDecimal())

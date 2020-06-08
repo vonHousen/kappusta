@@ -79,6 +79,15 @@ interface ReportDAO {
     fun howMuchMoneyIsSpentBetween(startDate: LocalDate, endDate: LocalDate): Money
 
     @Query("""
+        select
+            sum(worth)                     MONEY_SPENT
+        from EXPENSES
+        where date between :startDate and :endDate
+            and expense_type_id = 1     -- DAILY
+    """)
+    fun howMuchDailyMoneyIsSpentBetween(startDate: LocalDate, endDate: LocalDate): Money
+
+    @Query("""
         select budget_worth
         from BUDGET
         where first_day_date = :firstDayDate

@@ -103,4 +103,23 @@ object ReportRepository {
     fun setCurrentBudget(money: Money) {
         reportDAO.setCurrentBudget(BudgetEntity(firstDayOfCurrentMonth, money))
     }
+
+    fun getStatisticsReport(): StatisticsReport {
+        val paydayOfMonth = 10          // TODO make it configurable! Save it in db!
+        val daysSinceStartOfMonth = firstDayOfCurrentMonth.until(today, ChronoUnit.DAYS)
+        val avgDaily =
+            reportDAO.howMuchDailyMoneyIsSpentBetween(firstDayOfCurrentMonth, today) /
+                daysSinceStartOfMonth
+        val avgDailyAndSpecial =
+            reportDAO.howMuchMoneyIsSpentBetween(firstDayOfCurrentMonth, today) /
+                    daysSinceStartOfMonth
+        val daysToPayday = if (today.dayOfMonth > paydayOfMonth) {
+            today.until(lastDayOfCurrentMonth, ChronoUnit.DAYS).toInt() + paydayOfMonth
+        } else {
+            today.until(today.withDayOfMonth(paydayOfMonth), ChronoUnit.DAYS).toInt()
+        }
+        val moneyToPayday = Money(avgDailyAndSpecial.value * daysToPayday.toBigDecimal())
+
+        return StatisticsReport(avgDaily, avgDailyAndSpecial, daysToPayday, moneyToPayday)
+    }
 }

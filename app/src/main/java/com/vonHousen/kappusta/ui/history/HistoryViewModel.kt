@@ -22,6 +22,12 @@ class HistoryViewModel : ViewModel() {
     val summaryReport: LiveData<SummaryReport>
         get() = _summaryReport
 
+    private val _statisticsReport = MutableLiveData<StatisticsReport>().apply {
+        value = repo.getStatisticsReport()
+    }
+    val statisticsReport: LiveData<StatisticsReport>
+        get() = _statisticsReport
+
     fun addExpenseToHistory(newExpense: ExpenseRecord) {
         val addedID = repo.addExpense(newExpense)
         val newReport = ReportRecord(
@@ -33,6 +39,7 @@ class HistoryViewModel : ViewModel() {
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
         updateSummaryReport()
+        updateStatisticsReport()
     }
 
     fun addProfitToHistory(newProfit: ProfitRecord) {
@@ -46,15 +53,21 @@ class HistoryViewModel : ViewModel() {
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
         updateSummaryReport()
+        updateStatisticsReport()
     }
 
     fun notifyReportRemoved(position: Int) {
         val removedItem = reportList.removeAt(position)
         repo.removeReport(removedItem)
         updateSummaryReport()
+        updateStatisticsReport()
     }
 
     fun updateSummaryReport() {
-        _summaryReport.value = repo.getSummaryReport()      // TODO you don't need to query db again
+        _summaryReport.value = repo.getSummaryReport()          // TODO you don't need to query db again
+    }
+
+    fun updateStatisticsReport() {
+        _statisticsReport.value = repo.getStatisticsReport()    // TODO you don't need to query db again
     }
 }
