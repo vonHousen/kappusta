@@ -41,6 +41,12 @@ class HistoryViewModel : ViewModel() {
     val spendingCurve: LiveData<SpendingCurveData>
         get() = _spendingCurve
 
+    private val _avgCurves = MutableLiveData<AvgCurvesData>().apply {
+        value = repo.getAvgCurvesData()
+    }
+    val avgCurves: LiveData<AvgCurvesData>
+        get() = _avgCurves
+
     fun addExpenseToHistory(newExpense: ExpenseRecord) {
         val addedID = repo.addExpense(newExpense)
         val newReport = ReportRecord(
@@ -54,6 +60,7 @@ class HistoryViewModel : ViewModel() {
         updateSummaryReport()
         updateStatisticsReport()
         updateSpendingCurve()
+        updateAvgCurves()
     }
 
     fun addProfitToHistory(newProfit: ProfitRecord) {
@@ -68,7 +75,6 @@ class HistoryViewModel : ViewModel() {
         reportList.sortByDescending { it.DATE }
         updateSummaryReport()
         updateStatisticsReport()
-        updateSpendingCurve()
     }
 
     fun notifyReportRemoved(position: Int) {
@@ -77,6 +83,7 @@ class HistoryViewModel : ViewModel() {
         updateSummaryReport()
         updateStatisticsReport()
         updateSpendingCurve()
+        updateAvgCurves()
     }
 
     private fun updateSummaryReport() {
@@ -125,9 +132,18 @@ class HistoryViewModel : ViewModel() {
         }
         return report
     }
+
+    private fun updateAvgCurves() {
+        _avgCurves.value = repo.getAvgCurvesData()          // TODO you don't need to query db again
+    }
 }
 
 data class SpendingCurveData (
     val spendingCurve: List<Pair<LocalDate, Money>>,
     val budget: Money
+)
+
+data class AvgCurvesData (
+    val avgDailyCurve: List<Pair<LocalDate, Money>>,
+    val avgSpecialCurve: List<Pair<LocalDate, Money>>
 )

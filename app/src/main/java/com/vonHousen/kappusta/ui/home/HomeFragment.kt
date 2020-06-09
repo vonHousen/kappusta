@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.LegendRenderer
 import com.vonHousen.kappusta.R
 import com.vonHousen.kappusta.ui.history.HistoryViewModel
-import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.time.Instant
 import java.time.ZoneId
@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
             drawGraph(homeViewModel.getGraphPrerequisites(it))
         })
 
-        val graph: GraphView = dashboard_graph
+        val graph: GraphView = spending_curve_graph
         // custom label formatter
         graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
             override fun formatLabel(value: Double, isValueX: Boolean): String {
@@ -88,14 +88,14 @@ class HomeFragment : Fragment() {
         graph.gridLabelRenderer.numHorizontalLabels = 5
         graph.gridLabelRenderer.setHumanRounding(false)
         graph.gridLabelRenderer.textSize = 27F
-//        graph.legendRenderer.isVisible = true
-//        graph.legendRenderer.align = LegendRenderer.LegendAlign.TOP
-//        graph.legendRenderer.backgroundColor = resources.getColor(R.color.colorDarkBackground)
-//        graph.legendRenderer.textSize = 30F
+        graph.legendRenderer.isVisible = true
+        graph.legendRenderer.align = LegendRenderer.LegendAlign.TOP
+        graph.legendRenderer.backgroundColor = resources.getColor(R.color.colorDarkBackground)
+        graph.legendRenderer.textSize = 32F
     }
 
     private fun drawGraph(prerequisites: GraphPrerequisites) {
-        val graph: GraphView = dashboard_graph
+        val graph: GraphView = spending_curve_graph
         graph.removeAllSeries()
 
         // spending data series
@@ -116,6 +116,7 @@ class HomeFragment : Fragment() {
         paint.pathEffect = DashPathEffect(floatArrayOf(50f, 30f), 1F)
         paint.color = resources.getColor(R.color.colorPrimary)
         dataSeriesPredicted.setCustomPaint(paint)
+        dataSeriesPredicted.color = paint.color
         dataSeriesPredicted.title = resources.getString(R.string.data_series_predicted_title)
 
         // graph configuration

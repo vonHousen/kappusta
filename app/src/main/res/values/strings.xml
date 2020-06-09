@@ -23,12 +23,15 @@
     <string name="dashboard_salary_txt">Do najbliższej wypłaty potrzeba</string>
     <string name="dashboard_salary_days_title">dni</string>
     <string name="dashboard_salary_money_left_title">pieniędzy</string>
-    <string name="dashboard_graph_title">Tempo wydawania pieniędzy</string>
-    <string name="data_series_predicted_title">Przewidywane</string>
-    <string name="data_series_spending_title">W rzeczywistości</string>
+    <string name="spending_curve_graph_title">Tempo wydawania pieniędzy</string>
+    <string name="data_series_predicted_title">Przewidywany stan budżetu</string>
+    <string name="data_series_spending_title">Rzeczywisty stan budżetu</string>
     <string name="text_home_percent_left_title">pieniędzy w budżecie</string>
     <string name="text_home_percent_avg_title">względem przewidywań</string>
     <string name="achievements_title">Twoje osiągnięcia na dziś</string>
+    <string name="avg_curve_graph_title">Średnie dzienne wydatki</string>
+    <string name="data_series_daily_avg_title">Codzienne</string>
+    <string name="data_series_special_avg_title">Specjalne</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>

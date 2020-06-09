@@ -181,11 +181,11 @@
         >
 
         <TextView
-            android:id="@+id/dashboard_graph_title"
+            android:id="@+id/spending_curve_graph_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="@string/dashboard_graph_title"
+            android:text="@string/spending_curve_graph_title"
             android:textAlignment="center"
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
@@ -195,7 +195,7 @@
             />
 
         <com.jjoe64.graphview.helper.GraphViewXML
-            android:id="@+id/dashboard_graph"
+            android:id="@+id/spending_curve_graph"
             android:layout_width="match_parent"
             android:layout_height="200dip"
             app:seriesData="0=5;2=5;3=0;4=2"

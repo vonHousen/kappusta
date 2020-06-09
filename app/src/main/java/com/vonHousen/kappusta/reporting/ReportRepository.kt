@@ -2,6 +2,7 @@ package com.vonHousen.kappusta.reporting
 
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.db.*
+import com.vonHousen.kappusta.ui.history.AvgCurvesData
 import com.vonHousen.kappusta.ui.history.SpendingCurveData
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
@@ -179,5 +180,59 @@ object ReportRepository {
         }
 
         return SpendingCurveData(spendingCurve.toList(), budget)
+    }
+
+    fun getAvgCurvesData(): AvgCurvesData {
+
+        fun processRollingAvg(
+            points: List<SpentRecord>,
+            startDay: LocalDate,
+            endDay: LocalDate,
+            range: Int
+        ): List<Pair<LocalDate, Money>> {
+
+            // create full timeline
+            var day = startDay
+            val pointsOnTimeline = mutableListOf<Pair<LocalDate, Money>>()
+            for (point in points) {
+                while (point.DATE != day) {
+                    pointsOnTimeline.add(Pair(day, Money(0)))
+                    day = day.plusDays(1)
+                }
+                pointsOnTimeline.add(Pair(point.DATE, point.SPENT))
+                day = day.plusDays(1)
+            }
+            while (day <= endDay) {
+                pointsOnTimeline.add(Pair(day, Money(0)))
+                day = day.plusDays(1)
+            }
+
+            var sumInRange: Money
+            val avgPoints = mutableListOf<Pair<LocalDate, Money>>()
+            for ((idx, point) in pointsOnTimeline.withIndex()) {
+                if (point.first < startDay.plusDays(range.toLong()))
+                    continue
+                sumInRange = Money(0)
+                for (idx_inner in (idx-range)..idx) {
+                    sumInRange += pointsOnTimeline[idx_inner].second
+                }
+                avgPoints.add(Pair(point.first, sumInRange/range))
+            }
+            return avgPoints
+        }
+
+        val range = 7               // TODO make it customizable
+        val startDay = firstDayOfCurrentMonth.minusDays(range.toLong())
+        val dailyPoints = reportDAO.getDailySpentBetween(
+            startDay, today, ExpenseType.DAILY.ID
+        )
+        val specialPoints = reportDAO.getDailySpentBetween(
+            startDay, today, ExpenseType.SPECIAL.ID
+        )
+
+        val dailyCurve = processRollingAvg(dailyPoints, startDay, today, range)
+        val specialCurve = processRollingAvg(specialPoints, startDay, today, range)
+
+        return AvgCurvesData(dailyCurve, specialCurve)
     }
 }

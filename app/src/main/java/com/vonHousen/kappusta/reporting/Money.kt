@@ -25,6 +25,7 @@ class Money(money: BigDecimal) {
     operator fun minus(other: Money) = Money(value - other.value)
     operator fun div(other: Money) = value.toDouble() / other.value.toDouble()
     operator fun div(other: Long) = Money(value.toDouble() / other.toDouble())
+    operator fun div(other: Int) = Money(value.toDouble() / other.toDouble())
     operator fun unaryMinus(): Money = Money(-value)
     operator fun compareTo(other: Int): Int = value.compareTo(other.toBigDecimal())
     operator fun compareTo(other: Double): Int = value.compareTo(other.toBigDecimal())
