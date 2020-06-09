@@ -5,4 +5,4 @@ Project under development.
 
 
 ## Sample screenshots
-![Start Fragment](doc/screenshot_1?raw=true "Start")
+![Start Fragment](doc/screenshot_1.jpg?raw=true "Start")
