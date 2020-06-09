@@ -7,8 +7,8 @@
     <string name="reporting_ok_button">zapisz</string>
     <string name="title_reporting">Dodaj nowy wpis</string>
     <string name="category">Codzienne</string>
-    <string name="date">01-01-2020</string>
-    <string name="reported_how_much">12,99zł</string>
+    <string name="date">01.01.2020</string>
+    <string name="reported_how_much">12.99 zł</string>
     <string name="reporting_edit_text_hint">Ile złotych?</string>
     <string name="home_title">W tym miesiącu zostało Ci</string>
     <string name="home_percent_title">założonego budżetu</string>

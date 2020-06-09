@@ -97,6 +97,34 @@ class HistoryViewModel : ViewModel() {
     private fun updateSpendingCurve() {
         _spendingCurve.value = repo.getSpendingCurveData()      // TODO you don't need to query db again
     }
+
+    private fun getRealCategoryFromString(categoryTxt: String?, realCategoryNames: Array<String>): String? {
+        val categoryNames = arrayOf(
+            ExpenseType.DAILY.toString(),
+            ExpenseType.SPECIAL.toString(),
+            ProfitType.SALARY.toString(),
+            ProfitType.BONUS.toString(),
+            ProfitType.ONE_TIME.toString()
+        )   // TODO bind it with strings.xml
+        if (categoryNames.size != realCategoryNames.size)
+            return null
+        for ((idx, name) in categoryNames.withIndex()) {
+            if (categoryTxt == name)
+                return realCategoryNames[idx]
+        }
+        return null
+    }
+
+    fun prepareReport(
+        reportingHistoryList: List<ReportRecord>,
+        categoryNames: Array<String>
+    ): MutableList<ReportRecord> {
+        val report = reportingHistoryList.map{ it.copy() }.toMutableList()
+        for (reportRecord in report) {
+            reportRecord.COMMENT = getRealCategoryFromString(reportRecord.COMMENT, categoryNames)
+        }
+        return report
+    }
 }
 
 data class SpendingCurveData (

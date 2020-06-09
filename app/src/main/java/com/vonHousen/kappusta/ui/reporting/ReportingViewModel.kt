@@ -12,7 +12,7 @@ class ReportingViewModel : ViewModel() {
         Pair(null, ProfitType.SALARY),
         Pair(null, ProfitType.BONUS),
         Pair(null, ProfitType.ONE_TIME)
-    )
+    )   // TODO bind it with strings.xml
 
     fun processNewExpenseRecord(
         reportingValue: String,
