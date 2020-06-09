@@ -34,20 +34,22 @@ class SettingsFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
 
-
         configureSettingBudgetFields()
     }
 
     private fun configureSettingBudgetFields() {
+        historyViewModel.moneyBudget.observe(viewLifecycleOwner, Observer {
+             settingsViewModel.updateBudgetTxt(it)
+        })
         settingsViewModel.textMoneyBudget.observe(viewLifecycleOwner, Observer {
-                setting_budget_edit_text.editText?.setText(it)
+            setting_budget_edit_text.editText?.setText(it)
         })
         setting_budget_edit_text.setEndIconOnClickListener {
             val inputVal = Money(setting_budget_edit_text.editText?.text.toString())
-            val oldVal = settingsViewModel.getMoneyBudget()
+            val oldVal = historyViewModel.moneyBudget.value
             if (inputVal != oldVal)
                 settingsViewModel.updateBudgetTxt(inputVal)
-                historyViewModel.updateSummaryReport()
+                historyViewModel.updateBudget(inputVal)
             (activity as MainActivity).hideKeyboardPublic()
         }
     }

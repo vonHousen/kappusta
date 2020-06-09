@@ -8,18 +8,10 @@ import com.vonHousen.kappusta.reporting.ReportRepository
 
 class SettingsViewModel : ViewModel() {
 
-    private val repo = ReportRepository
-
-    private val _textMoneyBudget = MutableLiveData<String>().apply {
-        value = repo.getCurrentBudget().toString()
-    }
-    private var moneyBudget: Money = repo.getCurrentBudget()
-    fun getMoneyBudget() : Money = moneyBudget
+    private val _textMoneyBudget = MutableLiveData<String>()
     val textMoneyBudget: LiveData<String> = _textMoneyBudget
     fun updateBudgetTxt(money: Money) {
         _textMoneyBudget.value = "$money"
-        moneyBudget = money
-        repo.setCurrentBudget(money)
     }
 
 }

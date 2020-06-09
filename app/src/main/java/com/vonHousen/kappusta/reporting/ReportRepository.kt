@@ -2,6 +2,7 @@ package com.vonHousen.kappusta.reporting
 
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.db.*
+import com.vonHousen.kappusta.ui.history.SpendingCurveData
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
@@ -121,5 +122,19 @@ object ReportRepository {
         val moneyToPayday = Money(avgDailyAndSpecial.value * daysToPayday.toBigDecimal())
 
         return StatisticsReport(avgDaily, avgDailyAndSpecial, daysToPayday, moneyToPayday)
+    }
+
+    fun getSpendingCurveData(): SpendingCurveData {
+        val expenses = reportDAO.getDailySpentBetween(firstDayOfCurrentMonth, today)
+        val spendingCurve: MutableList<Pair<LocalDate, Money>> = mutableListOf()
+        val budget: Money = getCurrentBudget()
+
+        var availableMoney = budget
+        for (expense in expenses) {
+            availableMoney -= expense.SPENT
+            spendingCurve.add(Pair(expense.DATE, availableMoney))
+        }
+
+        return SpendingCurveData(spendingCurve.toList(), budget)
     }
 }

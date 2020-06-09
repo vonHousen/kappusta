@@ -29,19 +29,14 @@ class HistoryViewModel : ViewModel() {
     val statisticsReport: LiveData<StatisticsReport>
         get() = _statisticsReport
 
+    private val _moneyBudget = MutableLiveData<Money>().apply {
+        value = repo.getCurrentBudget()
+    }
+    val moneyBudget: LiveData<Money>
+        get() = _moneyBudget
+
     private val _spendingCurve = MutableLiveData<SpendingCurveData>().apply {
-        val tmp = listOf<Pair<LocalDate, Money>>(       // TODO get it up-to-date
-            Pair(LocalDate.parse("2020-06-01"), Money(1000)),
-            Pair(LocalDate.parse("2020-06-02"), Money(990)),
-            Pair(LocalDate.parse("2020-06-03"), Money(980)),
-            Pair(LocalDate.parse("2020-06-04"), Money(970)),
-            Pair(LocalDate.parse("2020-06-05"), Money(960)),
-            Pair(LocalDate.parse("2020-06-06"), Money(950)),
-            Pair(LocalDate.parse("2020-06-07"), Money(940)),
-            Pair(LocalDate.parse("2020-06-08"), Money(930)),
-            Pair(LocalDate.parse("2020-06-09"), Money(920))
-        )
-        value = SpendingCurveData(tmp.toTypedArray(), Money(1000))
+        value = repo.getSpendingCurveData()
     }
     val spendingCurve: LiveData<SpendingCurveData>
         get() = _spendingCurve
@@ -58,6 +53,7 @@ class HistoryViewModel : ViewModel() {
         reportList.sortByDescending { it.DATE }
         updateSummaryReport()
         updateStatisticsReport()
+        updateSpendingCurve()
     }
 
     fun addProfitToHistory(newProfit: ProfitRecord) {
@@ -72,6 +68,7 @@ class HistoryViewModel : ViewModel() {
         reportList.sortByDescending { it.DATE }
         updateSummaryReport()
         updateStatisticsReport()
+        updateSpendingCurve()
     }
 
     fun notifyReportRemoved(position: Int) {
@@ -79,18 +76,30 @@ class HistoryViewModel : ViewModel() {
         repo.removeReport(removedItem)
         updateSummaryReport()
         updateStatisticsReport()
+        updateSpendingCurve()
     }
 
-    fun updateSummaryReport() {
+    private fun updateSummaryReport() {
         _summaryReport.value = repo.getSummaryReport()          // TODO you don't need to query db again
     }
 
-    fun updateStatisticsReport() {
+    private fun updateStatisticsReport() {
         _statisticsReport.value = repo.getStatisticsReport()    // TODO you don't need to query db again
+    }
+
+    fun updateBudget(newBudget: Money) {
+        _moneyBudget.value = newBudget
+        repo.setCurrentBudget(newBudget)
+        updateSummaryReport()
+        updateSpendingCurve()
+    }
+
+    private fun updateSpendingCurve() {
+        _spendingCurve.value = repo.getSpendingCurveData()      // TODO you don't need to query db again
     }
 }
 
 data class SpendingCurveData (
-    val spendingCurve: Array<Pair<LocalDate, Money>>?,
+    val spendingCurve: List<Pair<LocalDate, Money>>,
     val budget: Money
 )

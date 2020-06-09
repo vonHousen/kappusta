@@ -56,15 +56,13 @@ class HomeViewModel : ViewModel() {
         ))
 
         val dataSeriesSpending: LineGraphSeries<DataPoint> = LineGraphSeries()
-        if (series != null) {
-            val pointCount = series.count()
-            for (point in series) {
-                val day: Date = Date.from(
-                    point.first.atStartOfDay()?.atZone(ZoneId.systemDefault())?.toInstant()
-                )
-                val value: Double = point.second.value.toDouble()
-                dataSeriesSpending.appendData(DataPoint(day, value), false, pointCount)
-            }
+        val pointCount = series.count()
+        for (point in series) {
+            val day: Date = Date.from(
+                point.first.atStartOfDay()?.atZone(ZoneId.systemDefault())?.toInstant()
+            )
+            val value: Double = point.second.value.toDouble()
+            dataSeriesSpending.appendData(DataPoint(day, value), false, pointCount)
         }
         return GraphPrerequisites(
             dataSeriesSpending, dataSeriesPredict, firstDayOfCurrentMonth, lastDayOfCurrentMonth
