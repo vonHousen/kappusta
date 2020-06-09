@@ -3,6 +3,7 @@ package com.vonHousen.kappusta.db
 import androidx.room.*
 import com.vonHousen.kappusta.reporting.Money
 import com.vonHousen.kappusta.reporting.ReportRecord
+import com.vonHousen.kappusta.reporting.SpentRecord
 import java.time.LocalDate
 
 @Dao
@@ -96,5 +97,42 @@ interface ReportDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setCurrentBudget(budgetEntity: BudgetEntity)
+
+    @Query("""
+        select
+            date            DATE
+        ,   sum(worth)      SPENT
+        from EXPENSES
+        where date between :startDate and :endDate
+        group by date
+        order by date
+    """)
+    fun getDailySpentBetween(startDate: LocalDate, endDate: LocalDate): List<SpentRecord>
+
+    @Query("""
+        select
+            date
+        from PROFITS
+        where profit_type_id = 1    -- SALARY
+            and date between :startDate and :endDate
+        group by date
+        order by date desc
+    """)
+    fun getClosestSalaries(startDate: LocalDate, endDate: LocalDate): List<LocalDate>
+
+    @Query("""
+        select
+            date            DATE
+        ,   sum(worth)      SPENT
+        from EXPENSES
+        where date between :startDate and :endDate
+            and expense_type_id = :expenseTypeID
+        group by date
+        order by date
+    """)
+    fun getDailySpentBetween(
+        startDate: LocalDate,
+        endDate: LocalDate,
+        expenseTypeID: Int): List<SpentRecord>
 
 }

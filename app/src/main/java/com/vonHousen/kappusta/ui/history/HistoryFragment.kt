@@ -33,7 +33,7 @@ class HistoryFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
         historyViewModel.reports.observe(viewLifecycleOwner, Observer {
-            updateRecyclerView(historyViewModel.reports.value)
+            updateRecyclerView(it)
         })
 
         configureSwiping()
@@ -41,13 +41,11 @@ class HistoryFragment : Fragment() {
 
     private fun updateRecyclerView(reportingHistoryList: List<ReportRecord>?) {
         if (reportingHistoryList != null) {
-            val customAdapter =
-                ReportingHistoryListAdapter(reportingHistoryList.toMutableList(), historyViewModel)
+            val categories: Array<String> = resources.getStringArray(R.array.Categories)
+            val report = historyViewModel.prepareReport(reportingHistoryList, categories)
+            val customAdapter = ReportingHistoryListAdapter(report, historyViewModel)
             recycler_view_reporting_history.apply {
-                // set a LinearLayoutManager to handle Android
-                // RecyclerView behavior
                 layoutManager = LinearLayoutManager(activity)
-                // set the custom adapter to the RecyclerView
                 adapter = customAdapter
             }
         }

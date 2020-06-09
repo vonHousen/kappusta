@@ -1,6 +1,7 @@
 package com.vonHousen.kappusta.reporting
 
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 data class ReportRecord(
     var DATE: LocalDate?,
@@ -15,7 +16,7 @@ data class ReportRecord(
 
     fun getDateString(): String {
         return if (DATE != null) {
-            DATE.toString()
+            DATE!!.format(DateTimeFormatter.ofPattern("dd.MM.yy"))
         } else {
             "unknown date"
         }

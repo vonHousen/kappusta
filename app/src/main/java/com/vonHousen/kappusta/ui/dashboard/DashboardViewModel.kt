@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.vonHousen.kappusta.reporting.Money
-import com.vonHousen.kappusta.ui.history.SpendingCurveData
+import com.vonHousen.kappusta.ui.history.AvgCurvesData
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
@@ -41,9 +41,23 @@ class DashboardViewModel : ViewModel() {
         _moneyLeftToPayday.value = money.getTxtWithCurrency()
     }
 
-    fun getGraphPrerequisites(spendingCurveData: SpendingCurveData): GraphPrerequisites {
-        val budget = spendingCurveData.budget
-        val series = spendingCurveData.spendingCurve
+
+    fun getGraphPrerequisites(avgCurvesData: AvgCurvesData): AvgGraphPrerequisites {
+        fun transformIntoDataSeries(curve: List<Pair<LocalDate, Money>>): LineGraphSeries<DataPoint> {
+            val dailyDataSeries: LineGraphSeries<DataPoint> = LineGraphSeries()
+            val pointCount = curve.count()
+            for (point in curve) {
+                val day: Date = Date.from(
+                    point.first.atStartOfDay()?.atZone(ZoneId.systemDefault())?.toInstant()
+                )
+                val value: Double = point.second.value.toDouble()
+                dailyDataSeries.appendData(DataPoint(day, value), false, pointCount)
+            }
+            return dailyDataSeries
+        }
+
+        val dailyCurve = avgCurvesData.avgDailyCurve
+        val specialCurve = avgCurvesData.avgSpecialCurve
 
         val today: LocalDate = LocalDate.now()
         val firstDayOfCurrentMonth: Date = Date.from(
@@ -54,31 +68,19 @@ class DashboardViewModel : ViewModel() {
             today.withDayOfMonth(today.lengthOfMonth())
                 .atStartOfDay()?.atZone(ZoneId.systemDefault())?.toInstant()
         )
-        val dataSeriesPredict: LineGraphSeries<DataPoint> = LineGraphSeries(arrayOf(
-            DataPoint(firstDayOfCurrentMonth, budget.value.toDouble()),
-            DataPoint(lastDayOfCurrentMonth, 0.0)
-        ))
 
-        val dataSeriesSpending: LineGraphSeries<DataPoint> = LineGraphSeries()
-        if (series != null) {
-            val pointCount = series.count()
-            for (point in series) {
-                val day: Date = Date.from(
-                    point.first.atStartOfDay()?.atZone(ZoneId.systemDefault())?.toInstant()
-                )
-                val value: Double = point.second.value.toDouble()
-                dataSeriesSpending.appendData(DataPoint(day, value), false, pointCount)
-            }
-        }
-        return GraphPrerequisites(
-            dataSeriesSpending, dataSeriesPredict, firstDayOfCurrentMonth, lastDayOfCurrentMonth
+        return AvgGraphPrerequisites(
+            transformIntoDataSeries(dailyCurve),
+            transformIntoDataSeries(specialCurve),
+            firstDayOfCurrentMonth,
+            lastDayOfCurrentMonth
         )
     }
 }
 
-data class GraphPrerequisites (
-    val dataSeriesSpending: LineGraphSeries<DataPoint>,
-    val dataSeriesPredict: LineGraphSeries<DataPoint>,
+data class AvgGraphPrerequisites (
+    val dataSeriesDaily: LineGraphSeries<DataPoint>,
+    val dataSeriesSpecial: LineGraphSeries<DataPoint>,
     val firstDay: Date,
     val lastDay: Date
 )

@@ -7,13 +7,13 @@
     <string name="reporting_ok_button">zapisz</string>
     <string name="title_reporting">Dodaj nowy wpis</string>
     <string name="category">Codzienne</string>
-    <string name="date">01-01-2020</string>
-    <string name="reported_how_much">12,99zł</string>
+    <string name="date">01.01.2020</string>
+    <string name="reported_how_much">12.99 zł</string>
     <string name="reporting_edit_text_hint">Ile złotych?</string>
     <string name="home_title">W tym miesiącu zostało Ci</string>
     <string name="home_percent_title">założonego budżetu</string>
-    <string name="title_settings">Ustawienia</string>
-    <string name="set_budget">Ustaw swój budżet na ten miesiąc</string>
+    <string name="title_settings">Dostosuj</string>
+    <string name="set_budget">Twój budżet na ten miesiąc</string>
     <string name="setting_budget_text_hint">Ile złotych?</string>
     <string name="set_budget_description_end_icon">Ustaw</string>
     <string name="currency_txt">zł</string>
@@ -23,9 +23,15 @@
     <string name="dashboard_salary_txt">Do najbliższej wypłaty potrzeba</string>
     <string name="dashboard_salary_days_title">dni</string>
     <string name="dashboard_salary_money_left_title">pieniędzy</string>
-    <string name="dashboard_graph_title">Tempo wydawania pieniędzy</string>
-    <string name="data_series_predicted_title">Przewidywane</string>
-    <string name="data_series_spending_title">W rzeczywistości</string>
+    <string name="spending_curve_graph_title">Tempo wydawania pieniędzy</string>
+    <string name="data_series_predicted_title">Przewidywany stan budżetu</string>
+    <string name="data_series_spending_title">Rzeczywisty stan budżetu</string>
+    <string name="text_home_percent_left_title">pieniędzy w budżecie</string>
+    <string name="text_home_percent_avg_title">względem przewidywań</string>
+    <string name="achievements_title">Twoje osiągnięcia na dziś</string>
+    <string name="avg_curve_graph_title">Średnie dzienne wydatki</string>
+    <string name="data_series_daily_avg_title">Codzienne</string>
+    <string name="data_series_special_avg_title">Specjalne</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>
