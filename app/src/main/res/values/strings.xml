@@ -12,7 +12,7 @@
     <string name="reporting_edit_text_hint">Ile złotych?</string>
     <string name="home_title">W tym miesiącu zostało Ci</string>
     <string name="home_percent_title">założonego budżetu</string>
-    <string name="title_settings">Ustawienia</string>
+    <string name="title_settings">Dostosuj</string>
     <string name="set_budget">Twój budżet na ten miesiąc</string>
     <string name="setting_budget_text_hint">Ile złotych?</string>
     <string name="set_budget_description_end_icon">Ustaw</string>

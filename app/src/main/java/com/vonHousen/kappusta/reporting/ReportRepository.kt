@@ -162,9 +162,20 @@ object ReportRepository {
         val budget: Money = getCurrentBudget()
 
         var availableMoney = budget
+        var day = firstDayOfCurrentMonth
         for (expense in expenses) {
+            // add available money on days that there were no expenses
+            while (expense.DATE != day) {
+                spendingCurve.add(Pair(day, availableMoney))
+                day = day.plusDays(1)
+            }
             availableMoney -= expense.SPENT
             spendingCurve.add(Pair(expense.DATE, availableMoney))
+            day = day.plusDays(1)
+        }
+        while (day <= today) {
+            spendingCurve.add(Pair(day, availableMoney))
+            day = day.plusDays(1)
         }
 
         return SpendingCurveData(spendingCurve.toList(), budget)
