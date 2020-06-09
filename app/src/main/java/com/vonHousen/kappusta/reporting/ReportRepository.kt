@@ -105,8 +105,40 @@ object ReportRepository {
         reportDAO.setCurrentBudget(BudgetEntity(firstDayOfCurrentMonth, money))
     }
 
+    private fun getNextPaydayOfMonth(): Int {
+        val monthAgo: LocalDate = today.minusMonths(1).withDayOfMonth(1)
+        val firstDayOfNextMonth: LocalDate = today.plusMonths(1).withDayOfMonth(1)
+        val lastDayOfNextMonth: LocalDate = firstDayOfNextMonth.withDayOfMonth(firstDayOfNextMonth.lengthOfMonth())
+        val salaries = reportDAO.getClosestSalaries(monthAgo, lastDayOfNextMonth)
+
+        val paydayOfMonth: Int
+        if (salaries.count() == 0) {
+            // default payday if not available
+            paydayOfMonth = 10                                  // TODO make default payday configurable
+        } else if (salaries[0] >= today) {
+            // first payday after today if available
+            val salariesNextMonth: MutableList<LocalDate> = mutableListOf()
+            for (payday in salaries) {                          // salaries are sorted desc
+                if (payday >= today)
+                    salariesNextMonth.add(payday)
+                else
+                    break
+            }
+            salariesNextMonth.sort()
+            paydayOfMonth = salariesNextMonth[0].dayOfMonth     // take the first salary after today
+        } else {
+            // there is no planned salary
+            // deduce next salary by first one among these from max month ago
+            val salariesPrevMonth: MutableList<LocalDate> = salaries.toMutableList()
+            salariesPrevMonth.sort()
+            paydayOfMonth = salariesPrevMonth[0].dayOfMonth     // take the first salary
+        }
+
+        return paydayOfMonth
+    }
+
     fun getStatisticsReport(): StatisticsReport {
-        val paydayOfMonth = 10          // TODO make it configurable! Save it in db!
+        val paydayOfMonth = getNextPaydayOfMonth()
         val daysSinceStartOfMonth = firstDayOfCurrentMonth.until(today, ChronoUnit.DAYS)
         val avgDaily =
             reportDAO.howMuchDailyMoneyIsSpentBetween(firstDayOfCurrentMonth, today) /

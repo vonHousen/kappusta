@@ -108,4 +108,15 @@ interface ReportDAO {
         order by date
     """)
     fun getDailySpentBetween(startDate: LocalDate, endDate: LocalDate): List<SpentRecord>
+
+    @Query("""
+        select
+            date
+        from PROFITS
+        where profit_type_id = 1    -- SALARY
+            and date between :startDate and :endDate
+        group by date
+        order by date desc
+    """)
+    fun getClosestSalaries(startDate: LocalDate, endDate: LocalDate): List<LocalDate>
 }
