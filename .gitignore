@@ -102,3 +102,4 @@ lint/tmp/
 
 # Other
 .idea/
+app/google-services.json
