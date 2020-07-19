@@ -41,6 +41,13 @@
         />
 
     <fragment
+        android:id="@+id/navigation_authentication"
+        android:name="com.vonHousen.kappusta.ui.authentication.AuthenticateFragment"
+        android:label="@string/title_authentication"
+        tools:layout="@layout/fragment_authentication"
+        />
+
+    <fragment
         android:id="@+id/navigation_reporting"
         android:name="com.vonHousen.kappusta.ui.reporting.ReportingFragment"
         android:label="@string/title_reporting"

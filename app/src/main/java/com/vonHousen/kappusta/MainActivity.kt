@@ -14,9 +14,13 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vonHousen.kappusta.db.ReportDB
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,19 +41,42 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_dashboard,
             R.id.navigation_settings,
             R.id.navigation_notifications,
+            R.id.navigation_authentication,
             R.id.navigation_history
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        configureGoogleSignIn()
+
         configureDatabase()
         add_button.setOnClickListener {
-            hideThingsForReporting()
+            hideThings()
             navController.navigate(R.id.navigation_reporting)
         }
     }
 
-    private fun hideThingsForReporting() {
+    override fun onStart() {
+        super.onStart()
+
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
+        // updateUI(account)    TODO
+    }
+
+    private fun configureGoogleSignIn() {
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        // Build a GoogleSignInClient with the options specified by gso.
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    fun hideThings() {
         nav_view.visibility = View.GONE
         add_button.hide()
     }

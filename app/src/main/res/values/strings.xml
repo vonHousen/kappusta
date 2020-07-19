@@ -32,6 +32,8 @@
     <string name="avg_curve_graph_title">Średnie dzienne wydatki</string>
     <string name="data_series_daily_avg_title">Codzienne</string>
     <string name="data_series_special_avg_title">Specjalne</string>
+    <string name="title_authentication">Logowanie</string>
+    <string name="logout_button_txt">Wyloguj się</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>

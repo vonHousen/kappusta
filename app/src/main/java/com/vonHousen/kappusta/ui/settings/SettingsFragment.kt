@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.R
 import com.vonHousen.kappusta.reporting.Money
@@ -35,6 +36,7 @@ class SettingsFragment : Fragment() {
             ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
 
         configureSettingBudgetFields()
+        configureLogoutButton()
     }
 
     private fun configureSettingBudgetFields() {
@@ -53,5 +55,14 @@ class SettingsFragment : Fragment() {
             (activity as MainActivity).hideKeyboardPublic()
         }
     }
+
+    private fun configureLogoutButton() {
+        button_logout.setOnClickListener {
+            findNavController().navigate(R.id.navigation_authentication)
+            (activity as MainActivity).hideThings()
+            // TODO logout
+        }
+    }
+
 
 }
