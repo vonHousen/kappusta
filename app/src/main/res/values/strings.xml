@@ -34,6 +34,7 @@
     <string name="data_series_special_avg_title">Specjalne</string>
     <string name="title_authentication">Logowanie</string>
     <string name="logout_button_txt">Wyloguj się</string>
+    <string name="auth_welcome">Cześć, zapraszam do zalogowania:)</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>
