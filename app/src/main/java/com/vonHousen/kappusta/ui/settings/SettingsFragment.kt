@@ -58,11 +58,9 @@ class SettingsFragment : Fragment() {
 
     private fun configureLogoutButton() {
         button_logout.setOnClickListener {
-            findNavController().navigate(R.id.navigation_authentication)
-            (activity as MainActivity).hideThings()
-            // TODO logout
+
+            val parentActivity = (activity as MainActivity)
+            parentActivity.goToLoginFragment(doSignOut = true)
         }
     }
-
-
 }

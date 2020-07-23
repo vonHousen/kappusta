@@ -68,7 +68,7 @@ class ReportingFragment : Fragment() {
             if (reportedProfit != null)
                 historyViewModel.addProfitToHistory(reportedProfit)
         }
-        (activity as MainActivity).showThingsAfterReporting()
+        (activity as MainActivity).showThings()
     }
 
     private fun configureReportingButton() {

@@ -5,6 +5,16 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <action
+        android:id="@+id/startAuthenticationFragment"
+        app:destination="@id/navigation_authentication"
+        >
+        <argument
+            android:name="doSignOutOnStart"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </action>
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.vonHousen.kappusta.ui.home.HomeFragment"
@@ -45,7 +55,12 @@
         android:name="com.vonHousen.kappusta.ui.authentication.AuthenticateFragment"
         android:label="@string/title_authentication"
         tools:layout="@layout/fragment_authentication"
-        />
+        >
+            <argument
+                android:name="doSignOutOnStart"
+                app:argType="boolean"
+                android:defaultValue="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_reporting"

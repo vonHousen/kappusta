@@ -2,6 +2,7 @@ package com.vonHousen.kappusta
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -15,10 +16,12 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseUser
 import com.vonHousen.kappusta.db.ReportDB
+import com.vonHousen.kappusta.etc.RC_SIGN_IN
+import com.vonHousen.kappusta.ui.authentication.AuthenticateFragment
+import com.vonHousen.kappusta.ui.authentication.AuthenticateFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         lateinit var db: ReportDB
     }
+    private var isLoggedOut: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        configureGoogleSignIn()
+        goToLoginFragment()
 
         configureDatabase()
         add_button.setOnClickListener {
@@ -56,24 +60,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
-        // updateUI(account)    TODO
-    }
-
-    private fun configureGoogleSignIn() {
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-        // Build a GoogleSignInClient with the options specified by gso.
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+    fun goToLoginFragment(doSignOut: Boolean = false) {
+        if (doSignOut) {
+            isLoggedOut = true
+        }
+        val action = AuthenticateFragmentDirections.startAuthenticationFragment(doSignOut)
+        findNavController(R.id.nav_host_fragment).navigate(action)
+        hideThings()
     }
 
     fun hideThings() {
@@ -81,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         add_button.hide()
     }
 
-    fun showThingsAfterReporting(withFragmentChange: Boolean = true) {
+    fun showThings(withFragmentChange: Boolean = true) {
         nav_view.visibility = View.VISIBLE
         add_button.show()
         hideKeyboard()
@@ -91,8 +84,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        showThingsAfterReporting(withFragmentChange = false)
+        if(isLoggedOut) {
+            // do nothing
+        } else {
+            super.onBackPressed()
+            showThings(withFragmentChange = false)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -142,5 +139,34 @@ class MainActivity : AppCompatActivity() {
             .addMigrations(MIGRATION_5_6)
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+    private fun getAuthFragment(): AuthenticateFragment? {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) ?: return null
+        val authFragment =
+            navHostFragment.childFragmentManager.fragments[0] ?: return null
+
+        return authFragment as AuthenticateFragment
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+            // pass Google Authentication task to AuthenticateFragment
+            val authFragment = getAuthFragment() ?: return
+            authFragment.handleSignInResult(task)
+        }
+    }
+
+    fun startWithUser(user: FirebaseUser) {
+        showThings()
+        isLoggedOut = false
     }
 }
