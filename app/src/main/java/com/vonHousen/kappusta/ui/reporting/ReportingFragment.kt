@@ -42,7 +42,7 @@ class ReportingFragment : Fragment() {
         reportingViewModel =
             ViewModelProviders.of(this).get(ReportingViewModel::class.java)
         historyViewModel =
-            ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
+            ViewModelProviders.of(requireActivity()).get(HistoryViewModel::class.java)
 
         configureReportingButton() // TODO listen to "OK" signal from keyboard
         configureCategorySpinner()
@@ -82,7 +82,7 @@ class ReportingFragment : Fragment() {
         val categoriesNamesArray = resources.getStringArray(R.array.Categories)
         // Create an ArrayAdapter using a simple spinner layout and languages array
         val arrayAdapter = ArrayAdapter(
-            activity!!,
+            requireActivity(),
             android.R.layout.simple_spinner_item,
             categoriesNamesArray
         )
@@ -112,7 +112,7 @@ class ReportingFragment : Fragment() {
         reporting_date_button.text = selectedDate.toString()
         reporting_date_button.setOnClickListener {
             val dpd = DatePickerDialog(
-                activity!!,
+                requireActivity(),
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     val day1: Int = dayOfMonth
                     val month1: Int = monthOfYear
