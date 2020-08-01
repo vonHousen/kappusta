@@ -7,4 +7,5 @@
     <color name="colorAccentSemiTransparent">#C08BC34A</color>
     <color name="colorBackground">#FAFAFA</color>
     <color name="colorDarkBackground">#F1F1F1</color>
+    <color name="colorFont">#808080</color>
 </resources>

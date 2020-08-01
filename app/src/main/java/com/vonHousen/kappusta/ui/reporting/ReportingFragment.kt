@@ -47,6 +47,7 @@ class ReportingFragment : Fragment() {
         configureReportingButton() // TODO listen to "OK" signal from keyboard
         configureCategorySpinner()
         configureDatePickerDialog()
+        configureTags()
     }
 
     private fun reportNow() {
@@ -129,5 +130,11 @@ class ReportingFragment : Fragment() {
                 }, year, month, day)
             dpd.show()
         }
+    }
+
+    private fun configureTags() {
+        val items = listOf("drogo", "tanio", "eloelo", "320")   // TODO
+        val adapter = ArrayAdapter(requireContext(), R.layout.tag_item, items)
+        reporting_payment_edit_tag_txt_view?.setAdapter(adapter)
     }
 }

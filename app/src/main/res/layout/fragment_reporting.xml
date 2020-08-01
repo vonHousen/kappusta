@@ -40,36 +40,37 @@
                 android:id="@+id/reporting_date_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="01-01-1970"
                 android:textSize="16sp"
-                android:backgroundTint="@color/colorBackground"
-                style="?android:attr/borderlessButtonStyle"
+                android:elevation="0dp"
+                android:background="@drawable/outlined_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reporting_payment_edit_text"
+                android:id="@+id/reporting_payment_edit_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/reporting_edit_text_hint"
+                android:hint="@string/reporting_edit_tag_hint"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                android:textColorHint="@color/colorFont"
+                app:boxStrokeColor="@color/colorFont"
+                app:helperTextTextColor="@color/colorFont"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/reporting_payment_edit_text_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:textAlignment="center"
-                        />
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/tag_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="48dp"
-                android:textSize="18sp"
-                android:textAlignment="center"
-                />
+                <AutoCompleteTextView
+                    android:id="@+id/reporting_payment_edit_tag_txt_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete"
+                    android:textColor="@color/colorFont"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/reporting_payment_edit_txt_comment"
@@ -84,6 +85,22 @@
                         android:inputType="text"
                         android:textAlignment="center"
                         />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reporting_payment_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/reporting_edit_text_hint"
+                android:layout_marginTop="4dp"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reporting_payment_edit_text_in"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textAlignment="center"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

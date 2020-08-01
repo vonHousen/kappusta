@@ -36,6 +36,7 @@
     <string name="logout_button_txt">Wyloguj się</string>
     <string name="auth_welcome">Cześć, zapraszam do zalogowania:)</string>
     <string name="reporting_edit_text_comment_hint">Chcesz to jakoś skomentować?</string>
+    <string name="reporting_edit_tag_hint">Dodać jakiś tag?</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>
