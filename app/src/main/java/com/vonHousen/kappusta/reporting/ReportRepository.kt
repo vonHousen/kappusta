@@ -140,7 +140,7 @@ object ReportRepository {
 
     fun getStatisticsReport(): StatisticsReport {
         val paydayOfMonth = getNextPaydayOfMonth()
-        val daysSinceStartOfMonth = firstDayOfCurrentMonth.until(today, ChronoUnit.DAYS)
+        val daysSinceStartOfMonth = firstDayOfCurrentMonth.until(today, ChronoUnit.DAYS) + 1
         val avgDaily =
             reportDAO.howMuchDailyMoneyIsSpentBetween(firstDayOfCurrentMonth, today) /
                 daysSinceStartOfMonth
