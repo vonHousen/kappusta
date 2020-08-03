@@ -18,19 +18,47 @@ enum class ExpenseType(val ID: Int) {
 class ExpenseRecord(
     private var howMuch: Money,
     private var expenseType: ExpenseType?,
-    private var date: LocalDate?
+    private var expenseTagID: Int?,
+    private var date: LocalDate?,
+    private var comment: String?,
+    private var createdDate: LocalDate?,
+    private var editedDate: LocalDate?
 ) {
 
     constructor(expenseEntity: ExpenseEntity): this(
         howMuch = expenseEntity.worth,
-        expenseType = ExpenseType.fromID(expenseEntity.expenseTypeID),
-        date = expenseEntity.date
+        expenseType = ExpenseType.fromID(expenseEntity.expenseTypeID)!!,
+        expenseTagID = expenseEntity.expenseTagID,
+        date = expenseEntity.date,
+        comment = expenseEntity.comment,
+        createdDate = expenseEntity.createdDate,
+        editedDate = expenseEntity.editedDate
+    )
+
+    constructor(
+        howMuch: Money,
+        expenseType: ExpenseType,
+        date: LocalDate?,
+        comment: String? = null,
+        expenseTagID: Int? = null
+    ): this(
+        howMuch = howMuch,
+        expenseType = expenseType,
+        expenseTagID = expenseTagID,
+        date = date,
+        comment = comment,
+        createdDate = null,
+        editedDate = null
     )
 
     constructor(reportRecord: ReportRecord): this(
         howMuch = -reportRecord.WORTH,
         expenseType = ExpenseType.valueOf(reportRecord.COMMENT!!),
-        date = reportRecord.DATE
+        expenseTagID = null,
+        date = reportRecord.DATE,
+        comment = null,
+        createdDate = null,
+        editedDate = null   // TODO check if should be null
     )
 
     fun getHowMuch(): Money {
@@ -43,5 +71,13 @@ class ExpenseRecord(
 
     fun getExpenseType(): ExpenseType? {
         return expenseType
+    }
+
+    fun getExpenseTagID(): Int? {
+        return expenseTagID
+    }
+
+    fun getComment(): String? {
+        return comment
     }
 }

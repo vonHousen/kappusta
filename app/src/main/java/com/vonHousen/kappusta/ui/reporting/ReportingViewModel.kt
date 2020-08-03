@@ -20,7 +20,13 @@ class ReportingViewModel : ViewModel() {
         date: LocalDate
     ): ExpenseRecord? {
         return if(reportingValue != "") {
-            ExpenseRecord(Money(reportingValue), expenseType, date)
+            ExpenseRecord(
+                howMuch = Money(reportingValue),
+                expenseType = expenseType,
+                expenseTagID = null,        // TODO bind it with UI
+                date = date,
+                comment = null              // TODO bind it with UI
+            )
         } else {
             null
         }
@@ -32,7 +38,13 @@ class ReportingViewModel : ViewModel() {
         date: LocalDate
     ): ProfitRecord? {
         return if(reportingValue != "") {
-            ProfitRecord(Money(reportingValue), profitType, date)
+            ProfitRecord(
+                worth = Money(reportingValue),
+                profitType = profitType,
+                profitTagID = null,         // TODO bind it with UI
+                date = date,
+                comment = null              // TODO bind it with UI
+            )
         } else {
             null
         }

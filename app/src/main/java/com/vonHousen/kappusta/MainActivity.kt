@@ -18,6 +18,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseUser
+import com.vonHousen.kappusta.db.Migrations
 import com.vonHousen.kappusta.db.ReportDB
 import com.vonHousen.kappusta.etc.RC_SIGN_IN
 import com.vonHousen.kappusta.ui.authentication.AuthenticateFragment
@@ -115,20 +116,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureDatabase() {
-        val MIGRATION_5_6 = object : Migration(5, 6) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("""
-                    drop table 'BUDGET';
-                """)
-                database.execSQL("""
-                    create table 'BUDGET' (
-                        first_day_date  INTEGER not null
-                    ,   budget_worth    REAL not null
-                    ,   primary key (first_day_date)
-                    );
-                """)
-            }
-        }
+        val migrations = Migrations()                       // TODO make it static
+        val migration_5_6 = migrations.MIGRATION_5_6
+        val migration_6_7 = migrations.MIGRATION_6_7
 
         db = Room.databaseBuilder(
             applicationContext,
@@ -136,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             "ReportDB"
         )
             .allowMainThreadQueries()   // TODO make it asynchronous
-            .addMigrations(MIGRATION_5_6)
+            .addMigrations(migration_5_6, migration_6_7)
             .fallbackToDestructiveMigration()
             .build()
     }
