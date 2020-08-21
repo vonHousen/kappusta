@@ -103,3 +103,4 @@ lint/tmp/
 # Other
 .idea/
 app/google-services.json
+/app/schemas/com.vonHousen.kappusta.db.ReportDB/*.json

@@ -52,19 +52,22 @@ class ReportingFragment : Fragment() {
 
     private fun reportNow() {
         paymentValueTxt = reporting_payment_edit_text.editText?.text.toString()
-        if (selectedReportType.first != null) {
+        if (selectedReportType.first != null) {     // TODO detect report type in more elegant way!
             val reportedExpense = reportingViewModel.processNewExpenseRecord(
-                paymentValueTxt,
-                selectedReportType.first!!,
-                selectedDate
+                reportingValue = paymentValueTxt,
+                expenseType = selectedReportType.first!!,
+                date = selectedDate,
+                expenseTagString = reporting_payment_edit_tag_txt_view.text.toString()
             )
             if (reportedExpense != null)
                 historyViewModel.addExpenseToHistory(reportedExpense)
+                // TODO these should inherit from the same parent, making it possible to use the same functions
         } else {
             val reportedProfit = reportingViewModel.processNewProfitRecord(
-                paymentValueTxt,
-                selectedReportType.second!!,
-                selectedDate
+                reportingValue = paymentValueTxt,
+                profitType = selectedReportType.second!!,
+                date = selectedDate,
+                profitTagString = reporting_payment_edit_tag_txt_view.text.toString()
             )
             if (reportedProfit != null)
                 historyViewModel.addProfitToHistory(reportedProfit)
@@ -100,8 +103,11 @@ class ReportingFragment : Fragment() {
                 view: View, position: Int, id: Long
             ) {
                 selectedReportType = reportingViewModel.getReportType(position)
+                configureTags()
             }
         }
+        selectedReportType = reportingViewModel.getReportType(0)    // set default report type
+
     }
 
     private fun configureDatePickerDialog() {
@@ -133,7 +139,11 @@ class ReportingFragment : Fragment() {
     }
 
     private fun configureTags() {
-        val items = listOf("drogo", "tanio", "eloelo", "320")   // TODO
+        val items = if (selectedReportType.first != null) {     // if reporting expense
+            reportingViewModel.getAllExpenseTags()
+        } else {                                                // if reporting profit
+            reportingViewModel.getAllProfitTags()
+        }
         val adapter = ArrayAdapter(requireContext(), R.layout.tag_item, items)
         reporting_payment_edit_tag_txt_view?.setAdapter(adapter)
     }

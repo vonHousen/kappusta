@@ -31,7 +31,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         // RecyclerView node initialized here
         historyViewModel =
-            ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
+            ViewModelProviders.of(requireActivity()).get(HistoryViewModel::class.java)
         historyViewModel.reports.observe(viewLifecycleOwner, Observer {
             updateRecyclerView(it)
         })
@@ -53,7 +53,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun configureSwiping() {
-        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+        val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = recycler_view_reporting_history.adapter as ReportingHistoryListAdapter
                 adapter.removeAt(viewHolder.adapterPosition)

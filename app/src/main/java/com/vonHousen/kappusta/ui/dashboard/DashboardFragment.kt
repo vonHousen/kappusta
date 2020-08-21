@@ -36,7 +36,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
             ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         historyViewModel =
-            ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
+            ViewModelProviders.of(requireActivity()).get(HistoryViewModel::class.java)
 
         configureTxtAvg()
         configureTxtSalary()

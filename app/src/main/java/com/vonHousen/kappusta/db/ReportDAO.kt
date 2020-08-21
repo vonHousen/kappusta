@@ -135,4 +135,16 @@ interface ReportDAO {
         endDate: LocalDate,
         expenseTypeID: Int): List<SpentRecord>
 
+    @Insert
+    fun insertProfitTag(profitTag: ProfitTagEntity): Long
+
+    @Insert
+    fun insertExpenseTag(expenseTag: ExpenseTagEntity): Long
+
+    @get:Query("select * from PROFIT_TAGS")
+    val allProfitTags: List<ProfitTagEntity>?
+
+    @get:Query("select * from EXPENSE_TAGS")
+    val allExpenseTags: List<ExpenseTagEntity>?
+
 }

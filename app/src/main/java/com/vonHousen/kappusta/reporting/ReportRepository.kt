@@ -71,7 +71,7 @@ object ReportRepository {
         return reportDAO.fullReport ?: listOf<ReportRecord>()
     }
 
-    fun removeReport(reportRecord: ReportRecord) {
+    fun removeReport(reportRecord: ReportRecord) {  // TODO delete ExpenseTag/ProfitTag if become unused
         if (reportRecord.WORTH < 0)
             reportDAO.deleteExpense(reportRecord.ID)
         else
@@ -234,5 +234,21 @@ object ReportRepository {
         val specialCurve = processRollingAvg(specialPoints, startDay, today, range)
 
         return AvgCurvesData(dailyCurve, specialCurve)
+    }
+
+    fun getAllExpenseTags(): List<ExpenseTagEntity>? {
+        return reportDAO.allExpenseTags
+    }
+
+    fun getAllProfitTags(): List<ProfitTagEntity>? {
+        return reportDAO.allProfitTags
+    }
+
+    fun addExpenseTag(expenseTag: ExpenseTagEntity): Long {
+        return reportDAO.insertExpenseTag(expenseTag)
+    }
+
+    fun addProfitTag(profitTag: ProfitTagEntity): Long {
+        return reportDAO.insertProfitTag(profitTag)
     }
 }
