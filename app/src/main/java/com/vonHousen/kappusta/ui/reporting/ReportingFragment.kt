@@ -57,7 +57,8 @@ class ReportingFragment : Fragment() {
                 reportingValue = paymentValueTxt,
                 expenseType = selectedReportType.first!!,
                 date = selectedDate,
-                expenseTagString = reporting_payment_edit_tag_txt_view.text.toString()
+                expenseTagString = reporting_payment_edit_tag_txt_view.text.toString(),
+                comment = reporting_payment_edit_text_comment_in.text.toString()
             )
             if (reportedExpense != null)
                 historyViewModel.addExpenseToHistory(reportedExpense)
@@ -67,7 +68,8 @@ class ReportingFragment : Fragment() {
                 reportingValue = paymentValueTxt,
                 profitType = selectedReportType.second!!,
                 date = selectedDate,
-                profitTagString = reporting_payment_edit_tag_txt_view.text.toString()
+                profitTagString = reporting_payment_edit_tag_txt_view.text.toString(),
+                comment = reporting_payment_edit_text_comment_in.text.toString()
             )
             if (reportedProfit != null)
                 historyViewModel.addProfitToHistory(reportedProfit)

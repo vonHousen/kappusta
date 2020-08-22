@@ -71,11 +71,29 @@ object ReportRepository {
         return reportDAO.fullReport ?: listOf<ReportRecord>()
     }
 
-    fun removeReport(reportRecord: ReportRecord) {  // TODO delete ExpenseTag/ProfitTag if become unused
-        if (reportRecord.WORTH < 0)
-            reportDAO.deleteExpense(reportRecord.ID)
-        else
-            reportDAO.deleteProfit(reportRecord.ID)
+    fun removeReport(reportRecord: ReportRecord) {
+        val reportID = reportRecord.ID
+        if (reportRecord.WORTH < 0) {
+            checkIfExpenseTagBecomeUnused(reportID)
+            reportDAO.deleteExpense(reportID)
+        } else {
+            checkIfProfitTagBecomeUnused(reportID)
+            reportDAO.deleteProfit(reportID)
+        }
+    }
+
+    private fun checkIfProfitTagBecomeUnused(profitID: Long) {
+        val profitTagID = reportDAO.getProfitTagIDFromProfitID(profitID)
+        if (profitTagID != null && reportDAO.checkHowPopularProfitTagIs(profitTagID).toInt() < 2) {
+            reportDAO.deleteProfitTag(profitTagID)
+        }
+    }
+
+    private fun checkIfExpenseTagBecomeUnused(expenseID: Long) {
+        val expenseTagID = reportDAO.getExpenseTagIDFromExpenseID(expenseID)
+        if (expenseTagID != null && reportDAO.checkHowPopularExpenseTagIs(expenseTagID).toInt() < 2) {
+            reportDAO.deleteExpenseTag(expenseTagID)
+        }
     }
 
     fun getSummaryReport(): SummaryReport {

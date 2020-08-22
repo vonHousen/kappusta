@@ -26,7 +26,8 @@ class ReportingViewModel : ViewModel() {
         reportingValue: String,
         expenseType: ExpenseType,
         date: LocalDate,
-        expenseTagString: String
+        expenseTagString: String,
+        comment: String?
     ): ExpenseRecord? {
 
         if(reportingValue == "")
@@ -51,7 +52,7 @@ class ReportingViewModel : ViewModel() {
                 expenseType = expenseType,
                 expenseTagID = expenseTagID,
                 date = date,
-                comment = null              // TODO bind it with UI
+                comment = comment
             )
     }
 
@@ -59,7 +60,8 @@ class ReportingViewModel : ViewModel() {
         reportingValue: String,
         profitType: ProfitType,
         date: LocalDate,
-        profitTagString: String
+        profitTagString: String,
+        comment: String?
     ): ProfitRecord? {
 
         if(reportingValue == "")
@@ -84,7 +86,7 @@ class ReportingViewModel : ViewModel() {
                 profitType = profitType,
                 profitTagID = profitTagID,
                 date = date,
-                comment = null              // TODO bind it with UI
+                comment = comment
             )
     }
 

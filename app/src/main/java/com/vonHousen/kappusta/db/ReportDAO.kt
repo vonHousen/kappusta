@@ -147,4 +147,43 @@ interface ReportDAO {
     @get:Query("select * from EXPENSE_TAGS")
     val allExpenseTags: List<ExpenseTagEntity>?
 
+    @Query("""
+        select
+            expense_tag_id
+        from EXPENSES               e1
+        where e1.expense_id = :expenseID
+    """)
+    fun getExpenseTagIDFromExpenseID(expenseID: Long): Long?
+
+    @Query("""
+        select
+            profit_tag_id
+        from PROFITS               p1
+        where p1.profit_id = :profitID
+    """)
+    fun getProfitTagIDFromProfitID(profitID: Long): Long?
+
+    @Query("""
+        select
+            count(expense_id)       POPULARITY_OF_EXPENSE_TAG
+        from EXPENSES               e1
+        where e1.expense_tag_id = :expenseTagID
+    """)
+    fun checkHowPopularExpenseTagIs(expenseTagID: Long): Long
+
+    @Query("""
+        select
+            count(profit_id)       POPULARITY_OF_PROFIT_TAG
+        from PROFITS               p1
+        where p1.profit_tag_id = :profitTagID
+    """)
+    fun checkHowPopularProfitTagIs(profitTagID: Long): Long
+
+    @Query("delete from EXPENSE_TAGS where expense_tag_id = :expenseTagID")
+    fun deleteExpenseTag(expenseTagID: Long)
+
+    @Query("delete from PROFIT_TAGS where profit_tag_id = :profitTagID")
+    fun deleteProfitTag(profitTagID: Long)
+
+
 }
