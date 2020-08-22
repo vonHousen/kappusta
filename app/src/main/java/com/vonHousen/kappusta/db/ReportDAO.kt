@@ -76,6 +76,7 @@ interface ReportDAO {
             sum(worth)                     MONEY_SPENT
         from EXPENSES
         where date between :startDate and :endDate
+            and expense_type_id != 3    -- OTHER
     """)
     fun howMuchMoneyIsSpentBetween(startDate: LocalDate, endDate: LocalDate): Money
 
@@ -104,6 +105,7 @@ interface ReportDAO {
         ,   sum(worth)      SPENT
         from EXPENSES
         where date between :startDate and :endDate
+            and expense_type_id != 3        -- OTHER
         group by date
         order by date
     """)

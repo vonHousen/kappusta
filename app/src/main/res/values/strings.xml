@@ -40,6 +40,7 @@
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>
+        <item>Inne wydatki</item>
         <item>Wypłata</item>
         <item>Bonus</item>
         <item>Jednorazowy przychód</item>

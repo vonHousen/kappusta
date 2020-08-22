@@ -13,6 +13,7 @@ class ReportingViewModel : ViewModel() {
     private val categories = arrayOf(
         Pair(ExpenseType.DAILY, null),
         Pair(ExpenseType.SPECIAL, null),
+        Pair(ExpenseType.OTHER, null),
         Pair(null, ProfitType.SALARY),
         Pair(null, ProfitType.BONUS),
         Pair(null, ProfitType.ONE_TIME)

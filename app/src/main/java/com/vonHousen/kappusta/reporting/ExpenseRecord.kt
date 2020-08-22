@@ -6,6 +6,7 @@ import java.time.LocalDate
 enum class ExpenseType(val ID: Int) {
     DAILY(1),
     SPECIAL(2),
+    OTHER(3),
     DUMMY(0);
 
     companion object {

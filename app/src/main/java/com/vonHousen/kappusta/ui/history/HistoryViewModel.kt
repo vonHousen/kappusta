@@ -109,6 +109,7 @@ class HistoryViewModel : ViewModel() {
         val categoryNames = arrayOf(
             ExpenseType.DAILY.toString(),
             ExpenseType.SPECIAL.toString(),
+            ExpenseType.OTHER.toString(),
             ProfitType.SALARY.toString(),
             ProfitType.BONUS.toString(),
             ProfitType.ONE_TIME.toString()
