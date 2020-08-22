@@ -19,6 +19,7 @@ enum class ProfitType(val ID: Int) {
 class ProfitRecord(
     private var worth: Money,
     private var profitType: ProfitType?,
+    private var profitTag: String?,
     private var profitTagID: Int?,
     private var date: LocalDate?,
     private var comment: String?,
@@ -26,40 +27,23 @@ class ProfitRecord(
     private var editedDate: LocalDate?
 ) {
 
-    constructor(profitEntity: ProfitEntity): this(
-        worth = profitEntity.worth,
-        profitType = ProfitType.fromID(profitEntity.profitTypeID),
-        profitTagID = profitEntity.profitTagID,
-        date = profitEntity.date,
-        comment = profitEntity.comment,
-        createdDate = profitEntity.createdDate,
-        editedDate = profitEntity.editedDate
-    )
 
     constructor(
         worth: Money,
         profitType: ProfitType,
         date: LocalDate?,
         comment: String? = null,
-        profitTagID: Int? = null
+        profitTagID: Int? = null,
+        profitTag: String? = null
     ): this(
         worth = worth,
         profitType = profitType,
+        profitTag = profitTag,
         profitTagID = profitTagID,
         date = date,
         comment = comment,
         createdDate = null,
         editedDate = null
-    )
-
-    constructor(reportRecord: ReportRecord): this(
-        worth = reportRecord.WORTH,
-        profitType = ProfitType.valueOf(reportRecord.CATEGORY!!),
-        profitTagID = null,
-        date = reportRecord.DATE,
-        comment = null,
-        createdDate = null,
-        editedDate = null   // TODO check if should be null
     )
 
     fun getHowMuch(): Money {
@@ -80,5 +64,9 @@ class ProfitRecord(
 
     fun getComment(): String? {
         return comment
+    }
+
+    fun getProfitTag(): String? {
+        return profitTag
     }
 }

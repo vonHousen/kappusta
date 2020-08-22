@@ -54,6 +54,7 @@ class HistoryViewModel : ViewModel() {
             WORTH = -newExpense.getHowMuch(),
             CATEGORY = newExpense.getExpenseType().toString(),
             COMMENT = newExpense.getComment(),
+            TAG = newExpense.getExpenseTag(),
             ID = addedID
         )
         reportList.add(newReport)
@@ -71,6 +72,7 @@ class HistoryViewModel : ViewModel() {
             WORTH = newProfit.getHowMuch(),
             CATEGORY = newProfit.getProfitType().toString(),
             COMMENT = newProfit.getComment(),
+            TAG = newProfit.getProfitTag(),
             ID = addedID
         )
         reportList.add(newReport)

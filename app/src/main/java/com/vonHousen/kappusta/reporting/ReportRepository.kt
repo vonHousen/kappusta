@@ -34,17 +34,6 @@ object ReportRepository {
         return reportDAO.insertProfit(ProfitEntity(profitRecord))
     }
 
-    fun getAllExpenses(): List<ExpenseRecord> {
-        val expensesTmp = mutableListOf<ExpenseRecord>()
-        val loadedExpenses = reportDAO.allExpenses
-        if (loadedExpenses != null) {
-            for (expense in loadedExpenses) {
-                expensesTmp.add(ExpenseRecord(expense))
-            }
-        }
-        return expensesTmp
-    }
-
     fun getAllExpenseTypes(): List<ExpenseType> {
         val expensesTypesTmp = mutableListOf<ExpenseType>()
         val loadedExpenseTypes = reportDAO.allExpenseTypes

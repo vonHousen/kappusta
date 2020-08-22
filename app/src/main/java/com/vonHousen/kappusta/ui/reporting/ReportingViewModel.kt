@@ -53,6 +53,7 @@ class ReportingViewModel : ViewModel() {
         return ExpenseRecord(
                 howMuch = Money(reportingValue),
                 expenseType = expenseType,
+                expenseTag = expenseTagString,
                 expenseTagID = expenseTagID,
                 date = date,
                 comment = reportedComment
@@ -89,6 +90,7 @@ class ReportingViewModel : ViewModel() {
         return ProfitRecord(
                 worth = Money(reportingValue),
                 profitType = profitType,
+                profitTag = profitTagString,
                 profitTagID = profitTagID,
                 date = date,
                 comment = reportedComment

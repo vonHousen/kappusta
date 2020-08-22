@@ -14,7 +14,7 @@
     >
 
     <TextView
-        android:id="@+id/reporting_history_comments"
+        android:id="@+id/reporting_history_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Kanapka"
@@ -26,14 +26,16 @@
         />
 
     <TextView
-        android:id="@+id/reporting_history_category"
+        android:id="@+id/reporting_history_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/category"
+        android:text="#jedzenie"
         android:fontFamily="sans-serif-light"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toTopOf="@id/reporting_history_date"
-        app:layout_constraintStart_toEndOf="@id/reporting_history_date"
+        android:layout_marginStart="8dp"
+        android:textSize="11sp"
+        app:layout_constraintTop_toTopOf="@id/reporting_history_comment"
+        app:layout_constraintBottom_toBottomOf="@id/reporting_history_comment"
+        app:layout_constraintStart_toEndOf="@id/reporting_history_comment"
         />
 
     <TextView
@@ -43,9 +45,19 @@
         android:text="@string/date"
         android:fontFamily="sans-serif-light"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/reporting_history_comments"
-        app:layout_constraintStart_toStartOf="@id/reporting_history_comments"
+        app:layout_constraintTop_toBottomOf="@id/reporting_history_comment"
+        app:layout_constraintStart_toStartOf="@id/reporting_history_comment"
+        />
 
+    <TextView
+        android:id="@+id/reporting_history_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@id/reporting_history_date"
+        app:layout_constraintStart_toEndOf="@id/reporting_history_date"
         />
 
     <TextView

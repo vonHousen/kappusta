@@ -46,28 +46,34 @@ interface ReportDAO {
     fun deleteProfitType(profitType: ProfitTypeEntity)
 
     @get:Query("""
-        select DATE, WORTH, CATEGORY, COMMENT, ID
+        select DATE, WORTH, CATEGORY, COMMENT, TAG, ID
         from (
             select 
-                O.date                  DATE
-            ,   -O.worth                WORTH
-            ,   OT.expense_type         CATEGORY
-            ,   O.comment               COMMENT
-            ,   O.expense_id            ID
-            from EXPENSES               O
-            inner join EXPENSE_TYPES    OT
+                O.date                      DATE
+            ,   -O.worth                    WORTH
+            ,   OT.expense_type             CATEGORY
+            ,   O.comment                   COMMENT
+            ,   ET.expense_tag              TAG
+            ,   O.expense_id                ID
+            from EXPENSES                   O
+            inner join EXPENSE_TYPES        OT
                 on O.expense_type_id = OT.expense_type_id
+            left outer join EXPENSE_TAGS    ET
+                on O.expense_tag_id = ET.expense_tag_id
                 
             union
             select 
-                P.date                  DATE
-            ,   P.worth                 WORTH
-            ,   PT.profit_type          CATEGORY
-            ,   P.comment               COMMENT
-            ,   P.profit_id             ID
-            from PROFITS                P
-            inner join PROFIT_TYPES     PT
+                P.date                      DATE
+            ,   P.worth                     WORTH
+            ,   PT.profit_type              CATEGORY
+            ,   P.comment                   COMMENT
+            ,   PTG.profit_tag              TAG
+            ,   P.profit_id                 ID
+            from PROFITS                    P
+            inner join PROFIT_TYPES         PT
                 on P.profit_type_id = PT.profit_type_id
+            left outer join PROFIT_TAGS     PTG
+                on PTG.profit_tag_id = P.profit_tag_id
         )
         order by DATE desc
     """)

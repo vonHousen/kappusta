@@ -19,6 +19,7 @@ enum class ExpenseType(val ID: Int) {
 class ExpenseRecord(
     private var howMuch: Money,
     private var expenseType: ExpenseType?,
+    private var expenseTag: String?,
     private var expenseTagID: Int?,
     private var date: LocalDate?,
     private var comment: String?,
@@ -26,40 +27,22 @@ class ExpenseRecord(
     private var editedDate: LocalDate?
 ) {
 
-    constructor(expenseEntity: ExpenseEntity): this(
-        howMuch = expenseEntity.worth,
-        expenseType = ExpenseType.fromID(expenseEntity.expenseTypeID)!!,
-        expenseTagID = expenseEntity.expenseTagID,
-        date = expenseEntity.date,
-        comment = expenseEntity.comment,
-        createdDate = expenseEntity.createdDate,
-        editedDate = expenseEntity.editedDate
-    )
-
     constructor(
         howMuch: Money,
         expenseType: ExpenseType,
         date: LocalDate?,
         comment: String? = null,
-        expenseTagID: Int? = null
+        expenseTagID: Int? = null,
+        expenseTag: String? = null
     ): this(
         howMuch = howMuch,
         expenseType = expenseType,
+        expenseTag = expenseTag,
         expenseTagID = expenseTagID,
         date = date,
         comment = comment,
         createdDate = null,
         editedDate = null
-    )
-
-    constructor(reportRecord: ReportRecord): this(
-        howMuch = -reportRecord.WORTH,
-        expenseType = ExpenseType.valueOf(reportRecord.CATEGORY!!),
-        expenseTagID = null,
-        date = reportRecord.DATE,
-        comment = null,
-        createdDate = null,
-        editedDate = null   // TODO check if should be null
     )
 
     fun getHowMuch(): Money {
@@ -80,5 +63,9 @@ class ExpenseRecord(
 
     fun getComment(): String? {
         return comment
+    }
+
+    fun getExpenseTag(): String? {
+        return expenseTag
     }
 }

@@ -12,12 +12,14 @@ class ReportingHistoryViewHolder(inflater: LayoutInflater, parent: ViewGroup)
         inflater.inflate(R.layout.reporting_history_item_row, parent, false)
     ) {
     private var commentField: TextView? = null
+    private var tagField: TextView? = null
     private var categoryField: TextView? = null
     private var dateField: TextView? = null
     private var howMuchField: TextView? = null
 
     init {
-        commentField = itemView.findViewById(R.id.reporting_history_comments)
+        commentField = itemView.findViewById(R.id.reporting_history_comment)
+        tagField = itemView.findViewById(R.id.reporting_history_tag)
         categoryField = itemView.findViewById(R.id.reporting_history_category)
         dateField = itemView.findViewById(R.id.reporting_history_date)
         howMuchField = itemView.findViewById(R.id.reporting_history_how_much)
@@ -32,6 +34,7 @@ class ReportingHistoryViewHolder(inflater: LayoutInflater, parent: ViewGroup)
             commentField?.text = report.getCategoryString()
             categoryField?.text = ""
         }
+        tagField?.text = report.getTagString()
         dateField?.text = report.getDateString()
         howMuchField?.text = report.getWorthString()
     }

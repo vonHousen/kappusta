@@ -8,6 +8,7 @@ data class ReportRecord(
     var WORTH: Money,
     var CATEGORY: String?,
     var COMMENT: String?,
+    var TAG: String?,
     var ID: Long
 ) {
 
@@ -33,6 +34,14 @@ data class ReportRecord(
 
     fun getComment(): String? {
         return COMMENT
+    }
+
+    fun getTagString(): String {
+        return if (TAG != null) {
+            "#${TAG}"
+        } else {
+            ""
+        }
     }
 }
 
