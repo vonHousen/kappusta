@@ -54,7 +54,7 @@ class ExpenseRecord(
 
     constructor(reportRecord: ReportRecord): this(
         howMuch = -reportRecord.WORTH,
-        expenseType = ExpenseType.valueOf(reportRecord.COMMENT!!),
+        expenseType = ExpenseType.valueOf(reportRecord.CATEGORY!!),
         expenseTagID = null,
         date = reportRecord.DATE,
         comment = null,

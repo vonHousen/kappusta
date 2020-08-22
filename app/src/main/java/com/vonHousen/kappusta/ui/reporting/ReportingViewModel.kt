@@ -28,7 +28,7 @@ class ReportingViewModel : ViewModel() {
         expenseType: ExpenseType,
         date: LocalDate,
         expenseTagString: String,
-        comment: String?
+        comment: String
     ): ExpenseRecord? {
 
         if(reportingValue == "")
@@ -48,12 +48,14 @@ class ReportingViewModel : ViewModel() {
             }
         }
 
+        val reportedComment = if (comment != "") comment else null
+
         return ExpenseRecord(
                 howMuch = Money(reportingValue),
                 expenseType = expenseType,
                 expenseTagID = expenseTagID,
                 date = date,
-                comment = comment
+                comment = reportedComment
             )
     }
 
@@ -62,7 +64,7 @@ class ReportingViewModel : ViewModel() {
         profitType: ProfitType,
         date: LocalDate,
         profitTagString: String,
-        comment: String?
+        comment: String
     ): ProfitRecord? {
 
         if(reportingValue == "")
@@ -82,12 +84,14 @@ class ReportingViewModel : ViewModel() {
             }
         }
 
+        val reportedComment = if (comment != "") comment else null
+
         return ProfitRecord(
                 worth = Money(reportingValue),
                 profitType = profitType,
                 profitTagID = profitTagID,
                 date = date,
-                comment = comment
+                comment = reportedComment
             )
     }
 

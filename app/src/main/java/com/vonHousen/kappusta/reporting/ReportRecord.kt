@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter
 data class ReportRecord(
     var DATE: LocalDate?,
     var WORTH: Money,
+    var CATEGORY: String?,
     var COMMENT: String?,
     var ID: Long
 ) {
@@ -22,12 +23,16 @@ data class ReportRecord(
         }
     }
 
-    fun getCommentString(): String {
-        return if (COMMENT != null) {
-            COMMENT.toString()      // TODO bound with string.xml
+    fun getCategoryString(): String {
+        return if (CATEGORY != null) {
+            CATEGORY.toString()      // TODO bound with string.xml
         } else {
             "unknown category"
         }
+    }
+
+    fun getComment(): String? {
+        return COMMENT
     }
 }
 

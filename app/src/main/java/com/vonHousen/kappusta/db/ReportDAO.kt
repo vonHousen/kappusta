@@ -46,12 +46,13 @@ interface ReportDAO {
     fun deleteProfitType(profitType: ProfitTypeEntity)
 
     @get:Query("""
-        select DATE, WORTH, COMMENT, ID
+        select DATE, WORTH, CATEGORY, COMMENT, ID
         from (
             select 
                 O.date                  DATE
             ,   -O.worth                WORTH
-            ,   OT.expense_type         COMMENT
+            ,   OT.expense_type         CATEGORY
+            ,   O.comment               COMMENT
             ,   O.expense_id            ID
             from EXPENSES               O
             inner join EXPENSE_TYPES    OT
@@ -61,7 +62,8 @@ interface ReportDAO {
             select 
                 P.date                  DATE
             ,   P.worth                 WORTH
-            ,   PT.profit_type          COMMENT
+            ,   PT.profit_type          CATEGORY
+            ,   P.comment               COMMENT
             ,   P.profit_id             ID
             from PROFITS                P
             inner join PROFIT_TYPES     PT

@@ -50,10 +50,11 @@ class HistoryViewModel : ViewModel() {
     fun addExpenseToHistory(newExpense: ExpenseRecord) {
         val addedID = repo.addExpense(newExpense)
         val newReport = ReportRecord(
-            newExpense.getDate(),
-            -newExpense.getHowMuch(),
-            newExpense.getExpenseType().toString(),
-            addedID
+            DATE = newExpense.getDate(),
+            WORTH = -newExpense.getHowMuch(),
+            CATEGORY = newExpense.getExpenseType().toString(),
+            COMMENT = newExpense.getComment(),
+            ID = addedID
         )
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
@@ -66,10 +67,11 @@ class HistoryViewModel : ViewModel() {
     fun addProfitToHistory(newProfit: ProfitRecord) {
         val addedID = repo.addProfit(newProfit)
         val newReport = ReportRecord(
-            newProfit.getDate(),
-            newProfit.getHowMuch(),
-            newProfit.getProfitType().toString(),
-            addedID
+            DATE = newProfit.getDate(),
+            WORTH = newProfit.getHowMuch(),
+            CATEGORY = newProfit.getProfitType().toString(),
+            COMMENT = newProfit.getComment(),
+            ID = addedID
         )
         reportList.add(newReport)
         reportList.sortByDescending { it.DATE }
@@ -129,7 +131,7 @@ class HistoryViewModel : ViewModel() {
     ): MutableList<ReportRecord> {
         val report = reportingHistoryList.map{ it.copy() }.toMutableList()
         for (reportRecord in report) {
-            reportRecord.COMMENT = getRealCategoryFromString(reportRecord.COMMENT, categoryNames)
+            reportRecord.CATEGORY = getRealCategoryFromString(reportRecord.CATEGORY, categoryNames)
         }
         return report
     }

@@ -54,7 +54,7 @@ class ProfitRecord(
 
     constructor(reportRecord: ReportRecord): this(
         worth = reportRecord.WORTH,
-        profitType = ProfitType.valueOf(reportRecord.COMMENT!!),
+        profitType = ProfitType.valueOf(reportRecord.CATEGORY!!),
         profitTagID = null,
         date = reportRecord.DATE,
         comment = null,
