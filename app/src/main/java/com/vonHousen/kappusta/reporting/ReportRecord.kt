@@ -37,7 +37,7 @@ data class ReportRecord(
     }
 
     fun getTagString(): String {
-        return if (TAG != null) {
+        return if (TAG != null && TAG != "") {
             "#${TAG}"
         } else {
             ""
