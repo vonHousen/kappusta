@@ -1,6 +1,5 @@
-package com.vonHousen.kappusta.db
+package com.vonHousen.kappusta.db.reportDB
 
-import androidx.annotation.NonNull
 import androidx.room.*
 import com.vonHousen.kappusta.reporting.ExpenseRecord
 import com.vonHousen.kappusta.reporting.Money

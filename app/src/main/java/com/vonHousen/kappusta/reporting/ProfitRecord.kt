@@ -1,6 +1,5 @@
 package com.vonHousen.kappusta.reporting
 
-import com.vonHousen.kappusta.db.ProfitEntity
 import java.time.LocalDate
 
 enum class ProfitType(val ID: Int) {

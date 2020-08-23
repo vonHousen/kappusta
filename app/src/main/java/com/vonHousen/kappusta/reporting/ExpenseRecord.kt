@@ -1,6 +1,5 @@
 package com.vonHousen.kappusta.reporting
 
-import com.vonHousen.kappusta.db.ExpenseEntity
 import java.time.LocalDate
 
 enum class ExpenseType(val ID: Int) {

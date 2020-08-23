@@ -1,7 +1,7 @@
 package com.vonHousen.kappusta.reporting
 
 import com.vonHousen.kappusta.MainActivity
-import com.vonHousen.kappusta.db.*
+import com.vonHousen.kappusta.db.reportDB.*
 import com.vonHousen.kappusta.ui.history.AvgCurvesData
 import com.vonHousen.kappusta.ui.history.SpendingCurveData
 import java.time.LocalDate

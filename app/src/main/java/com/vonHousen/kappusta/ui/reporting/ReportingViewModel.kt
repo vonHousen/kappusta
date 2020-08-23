@@ -1,8 +1,8 @@
 package com.vonHousen.kappusta.ui.reporting
 
 import androidx.lifecycle.ViewModel
-import com.vonHousen.kappusta.db.ExpenseTagEntity
-import com.vonHousen.kappusta.db.ProfitTagEntity
+import com.vonHousen.kappusta.db.reportDB.ExpenseTagEntity
+import com.vonHousen.kappusta.db.reportDB.ProfitTagEntity
 import com.vonHousen.kappusta.reporting.*
 import java.time.LocalDate
 

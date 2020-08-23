@@ -1,4 +1,4 @@
-package com.vonHousen.kappusta.db
+package com.vonHousen.kappusta.db.reportDB
 
 import androidx.room.*
 import com.vonHousen.kappusta.reporting.ExpenseType

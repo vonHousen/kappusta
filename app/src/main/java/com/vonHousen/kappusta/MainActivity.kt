@@ -13,13 +13,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseUser
-import com.vonHousen.kappusta.db.Migrations
-import com.vonHousen.kappusta.db.ReportDB
+import com.vonHousen.kappusta.db.reportDB.Migrations
+import com.vonHousen.kappusta.db.reportDB.ReportDB
 import com.vonHousen.kappusta.etc.RC_SIGN_IN
 import com.vonHousen.kappusta.ui.authentication.AuthenticateFragment
 import com.vonHousen.kappusta.ui.authentication.AuthenticateFragmentDirections
@@ -124,11 +122,10 @@ class MainActivity : AppCompatActivity() {
             applicationContext,
             ReportDB::class.java,
             "ReportDB"
-        )
-            .allowMainThreadQueries()   // TODO make it asynchronous
-            .addMigrations(migration_5_6, migration_6_7)
-            .fallbackToDestructiveMigration()
-            .build()
+        ).allowMainThreadQueries()   // TODO make it asynchronous
+         .addMigrations(migration_5_6, migration_6_7)
+         .fallbackToDestructiveMigration()
+         .build()
     }
 
     private fun getAuthFragment(): AuthenticateFragment? {
