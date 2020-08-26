@@ -3,6 +3,7 @@ package com.vonHousen.kappusta.db.reportDB
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.vonHousen.kappusta.db.Converters
 
 @Database(
     entities = [

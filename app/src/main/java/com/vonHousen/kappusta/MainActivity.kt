@@ -16,11 +16,14 @@ import androidx.room.Room
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseUser
+import com.vonHousen.kappusta.db.authDB.AuthDB
+import com.vonHousen.kappusta.db.authDB.LocalAuthRepository
 import com.vonHousen.kappusta.db.reportDB.Migrations
 import com.vonHousen.kappusta.db.reportDB.ReportDB
 import com.vonHousen.kappusta.etc.RC_SIGN_IN
 import com.vonHousen.kappusta.ui.authentication.AuthenticateFragment
 import com.vonHousen.kappusta.ui.authentication.AuthenticateFragmentDirections
+import com.vonHousen.kappusta.etc.HashUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var db: ReportDB
+        lateinit var auth_db: AuthDB
+        lateinit var auth_repo: LocalAuthRepository
     }
     private var isLoggedOut: Boolean = false
 
@@ -52,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         goToLoginFragment()
 
-        configureDatabase()
+        configureAuthDatabase()
         add_button.setOnClickListener {
             hideThings()
             navController.navigate(R.id.navigation_reporting)
@@ -113,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun configureDatabase() {
+    private fun configureReportingDatabase(path_to_db: String = "ReportDB") {
         val migrations = Migrations()                       // TODO make it static
         val migration_5_6 = migrations.MIGRATION_5_6
         val migration_6_7 = migrations.MIGRATION_6_7
@@ -121,11 +126,22 @@ class MainActivity : AppCompatActivity() {
         db = Room.databaseBuilder(
             applicationContext,
             ReportDB::class.java,
-            "ReportDB"
+            path_to_db
         ).allowMainThreadQueries()   // TODO make it asynchronous
          .addMigrations(migration_5_6, migration_6_7)
          .fallbackToDestructiveMigration()
          .build()
+    }
+
+    private fun configureAuthDatabase() {
+        auth_db = Room.databaseBuilder(
+            applicationContext,
+            AuthDB::class.java,
+            "AuthDB"
+        ).allowMainThreadQueries()
+         .fallbackToDestructiveMigration()
+         .build()
+        auth_repo = LocalAuthRepository(applicationContext)
     }
 
     private fun getAuthFragment(): AuthenticateFragment? {
@@ -153,6 +169,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startWithUser(user: FirebaseUser) {
+        val uidHashed = HashUtils.sha256(user.uid)
+        val dbName = auth_repo.getDBNameForUser(uidHashed)
+        configureReportingDatabase(dbName)
         showThings()
         isLoggedOut = false
     }

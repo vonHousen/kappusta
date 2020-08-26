@@ -104,3 +104,5 @@ lint/tmp/
 .idea/
 app/google-services.json
 /app/schemas/com.vonHousen.kappusta.db.ReportDB/*.json
+/app/schemas/com.vonHousen.kappusta.db.authDB.AuthDB/*.json
+/app/schemas/com.vonHousen.kappusta.db.reportDB.ReportDB/*.json

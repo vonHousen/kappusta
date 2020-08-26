@@ -1,4 +1,4 @@
-package com.vonHousen.kappusta.db.reportDB
+package com.vonHousen.kappusta.db
 
 import androidx.room.TypeConverter
 import com.vonHousen.kappusta.reporting.Money
