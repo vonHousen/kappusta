@@ -7,39 +7,43 @@
     >
 
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
         android:orientation="vertical"
-        tools:context=".ui.reporting.ReportingFragment"
-        android:padding="16dp"
         android:layout_gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="2dp"
         >
 
         <LinearLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:context=".ui.reporting.ReportingFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_field"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@drawable/rounded_field"
             >
 
             <Spinner
-                    android:id="@+id/reporting_type_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginStart="48dp"
-                    android:textSize="18sp"
-                    android:textAlignment="center"
-                    />
+                android:id="@+id/reporting_type_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="48dp"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                />
 
             <Button
                 android:id="@+id/reporting_date_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:text="01-01-1970"
                 android:textSize="16sp"
                 android:elevation="0dp"
@@ -47,11 +51,66 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/reporting_split_button"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reporting_payment_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/reporting_edit_text_hint"
+                        android:textColorHint="@color/colorAccent"
+                        android:layout_marginTop="4dp"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/reporting_payment_edit_text_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:textAlignment="center"
+                            android:textSize="16sp"
+                            android:gravity="center_horizontal"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/reporting_split_button"
+                    android:layout_width="128dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/secondary_rounded_button"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@string/reporting_split_button_text"
+                    android:textColor="@color/colorBackground"
+                    android:fontFamily="sans-serif-light"
+                    style="?android:attr/borderlessButtonStyle"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/reporting_payment_edit_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reporting_edit_tag_hint"
+                android:layout_marginTop="2dp"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
@@ -65,7 +124,7 @@
                 <AutoCompleteTextView
                     android:id="@+id/reporting_payment_edit_tag_txt_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="56dp"
                     android:inputType="textAutoComplete"
                     android:textColor="@color/colorFont"
                     />
@@ -74,49 +133,33 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/reporting_payment_edit_txt_comment"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:hint="@string/reporting_edit_text_comment_hint"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
+                android:textColorHint="@color/colorFont"
+                app:boxStrokeColor="@color/colorFont"
+                app:helperTextTextColor="@color/colorFont"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/reporting_payment_edit_text_comment_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:textAlignment="center"
-                        />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/reporting_payment_edit_text_comment_in"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textAlignment="viewStart"
+                    />
+
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_outlined_field"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginTop="8dp"
-            >
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reporting_payment_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/reporting_edit_text_hint"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/reporting_payment_edit_text_in"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:textAlignment="center"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_ok_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,20 +168,17 @@
 
             <Button
                 android:id="@+id/button_reporting_ok"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/reporting_ok_button"
                 android:textColor="@color/colorBackground"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                style="?android:attr/borderlessButtonStyle"
                 />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
