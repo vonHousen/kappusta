@@ -3,12 +3,15 @@ package com.vonHousen.kappusta.ui.history
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.vonHousen.kappusta.etc.CategoriesParser
 import com.vonHousen.kappusta.reporting.*
 import java.time.LocalDate
 
-class HistoryViewModel : ViewModel() {
+
+class HistoryViewModel: ViewModel() {
 
     private val repo = ReportRepository
+    private lateinit var categoriesParser: CategoriesParser
 
     private var reportList = repo.getFullReport().toMutableList()
     private val _reportList = MutableLiveData<List<ReportRecord>>().apply {
@@ -46,6 +49,10 @@ class HistoryViewModel : ViewModel() {
     }
     val avgCurves: LiveData<AvgCurvesData>
         get() = _avgCurves
+
+    fun setCategoriesParser(categoriesParser: CategoriesParser) {
+        this.categoriesParser = categoriesParser
+    }
 
     fun addExpenseToHistory(newExpense: ExpenseRecord) {
         val addedID = repo.addExpense(newExpense)
@@ -109,31 +116,12 @@ class HistoryViewModel : ViewModel() {
         _spendingCurve.value = repo.getSpendingCurveData()      // TODO you don't need to query db again
     }
 
-    private fun getRealCategoryFromString(categoryTxt: String?, realCategoryNames: Array<String>): String? {
-        val categoryNames = arrayOf(
-            ExpenseType.DAILY.toString(),
-            ExpenseType.SPECIAL.toString(),
-            ExpenseType.OTHER.toString(),
-            ProfitType.SALARY.toString(),
-            ProfitType.BONUS.toString(),
-            ProfitType.ONE_TIME.toString()
-        )   // TODO bind it with strings.xml
-        if (categoryNames.size != realCategoryNames.size)
-            return null
-        for ((idx, name) in categoryNames.withIndex()) {
-            if (categoryTxt == name)
-                return realCategoryNames[idx]
-        }
-        return null
-    }
-
-    fun prepareReport(
-        reportingHistoryList: List<ReportRecord>,
-        categoryNames: Array<String>
-    ): MutableList<ReportRecord> {
+    fun getReportsWithParsedCategories(reportingHistoryList: List<ReportRecord>)
+            : MutableList<ReportRecord> {
         val report = reportingHistoryList.map{ it.copy() }.toMutableList()
         for (reportRecord in report) {
-            reportRecord.CATEGORY = getRealCategoryFromString(reportRecord.CATEGORY, categoryNames)
+            reportRecord.CATEGORY =
+                categoriesParser.convertToLocalCategoryName(reportRecord.CATEGORY)
         }
         return report
     }

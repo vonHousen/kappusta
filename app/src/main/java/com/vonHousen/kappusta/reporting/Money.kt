@@ -11,6 +11,15 @@ class Money(money: BigDecimal) {
         return "$value $currency"
     }
 
+    fun getTxtWithCurrencyWithSign() : String {
+        val sign = if (this < Money(0.0)) {
+            ""
+        } else {
+            "+"
+        }
+        return "$sign$value $currency"
+    }
+
     constructor(moneyValue: Double) : this(moneyValue.toBigDecimal())
     constructor(moneyValue: Int) : this(moneyValue.toBigDecimal())
     constructor(moneyValue: Long) : this(moneyValue.toBigDecimal())

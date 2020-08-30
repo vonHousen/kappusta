@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.vonHousen.kappusta.etc.CategoriesParser
 import com.vonHousen.kappusta.reporting.ReportRecord
 
 
@@ -32,6 +33,9 @@ class HistoryFragment : Fragment() {
         // RecyclerView node initialized here
         historyViewModel =
             ViewModelProviders.of(requireActivity()).get(HistoryViewModel::class.java)
+        historyViewModel.setCategoriesParser(
+            CategoriesParser(resources.getStringArray(R.array.Categories))
+        )
         historyViewModel.reports.observe(viewLifecycleOwner, Observer {
             updateRecyclerView(it)
         })
@@ -41,8 +45,7 @@ class HistoryFragment : Fragment() {
 
     private fun updateRecyclerView(reportingHistoryList: List<ReportRecord>?) {
         if (reportingHistoryList != null) {
-            val categories: Array<String> = resources.getStringArray(R.array.Categories)
-            val report = historyViewModel.prepareReport(reportingHistoryList, categories)
+            val report = historyViewModel.getReportsWithParsedCategories(reportingHistoryList)
             val customAdapter = ReportingHistoryListAdapter(report, historyViewModel)
             recycler_view_reporting_history.apply {
                 layoutManager = LinearLayoutManager(activity)

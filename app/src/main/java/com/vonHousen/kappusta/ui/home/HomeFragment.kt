@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         historyViewModel =
-            ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
+            ViewModelProviders.of(requireActivity()).get(HistoryViewModel::class.java)
 
         configureTextBoxes()
         configureGraph()
