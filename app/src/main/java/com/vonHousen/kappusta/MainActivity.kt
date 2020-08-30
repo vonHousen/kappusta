@@ -4,12 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
@@ -35,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth_repo: LocalAuthRepository
     }
     private var isLoggedOut: Boolean = false
+    private var isActionBarButtonsVisible = MutableLiveData<Boolean>(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        configureBottomNavigation(navView, navController)
 
         goToLoginFragment()
 
@@ -62,6 +69,35 @@ class MainActivity : AppCompatActivity() {
             hideThings()
             navController.navigate(R.id.navigation_reporting)
         }
+    }
+
+    private fun configureBottomNavigation(
+        navView: BottomNavigationView,
+        navController: NavController
+    ) {
+        navView.setOnNavigationItemSelectedListener { item ->
+            // define custom behaviour on selecting particular fragment
+            when (item.itemId) {
+                R.id.navigation_notifications -> {
+                    isActionBarButtonsVisible.value = true
+                }
+                else -> {
+                    isActionBarButtonsVisible.value = false
+                }
+            }
+            // finally perform default behaviour
+            NavigationUI.onNavDestinationSelected(item, navController)
+            true
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.action_bar_menu, menu)
+        val actionBarAddButton = menu!!.findItem(R.id.action_bar_add_button)
+        isActionBarButtonsVisible.observe(this, Observer {
+            actionBarAddButton.isVisible = it
+        })
+        return true
     }
 
     fun goToLoginFragment(doSignOut: Boolean = false) {
@@ -74,8 +110,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hideThings() {
-        nav_view.visibility = View.GONE
         add_button.hide()
+        nav_view.visibility = View.GONE
     }
 
     fun showThings(withFragmentChange: Boolean = true) {

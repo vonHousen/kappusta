@@ -2,7 +2,7 @@
     <string name="app_name">kappusta</string>
     <string name="title_home">Start</string>
     <string name="title_dashboard">Statystyki</string>
-    <string name="title_notifications">Grupy</string>
+    <string name="title_notifications">Portfele</string>
     <string name="title_history">Rozliczenia</string>
     <string name="reporting_ok_button">zapisz</string>
     <string name="title_reporting">Dodaj nowy wpis</string>
@@ -38,6 +38,7 @@
     <string name="reporting_edit_text_comment_hint">Dodać komentarz?</string>
     <string name="reporting_edit_tag_hint">Dodać tag?</string>
     <string name="reporting_split_button_text">Podziel koszty</string>
+    <string name="notifications_add_group">Dodaj portfel</string>
     <string-array name="Categories">
         <item>Codzienne wydatki</item>
         <item>Specjalne wydatki</item>
