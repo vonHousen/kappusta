@@ -80,9 +80,11 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.navigation_notifications -> {
                     isActionBarButtonsVisible.value = true
+                    add_button.hide()
                 }
                 else -> {
                     isActionBarButtonsVisible.value = false
+                    add_button.show()
                 }
             }
             // finally perform default behaviour
