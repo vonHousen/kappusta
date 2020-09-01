@@ -146,7 +146,6 @@ object ReportRepository {
     }
 
     fun getStatisticsReport(): StatisticsReport {
-        val paydayOfMonth = getNextPaydayOfMonth()
         val daysSinceStartOfMonth = firstDayOfCurrentMonth.until(today, ChronoUnit.DAYS) + 1
         val avgDaily =
             reportDAO.howMuchDailyMoneyIsSpentBetween(firstDayOfCurrentMonth, today) /
@@ -154,14 +153,24 @@ object ReportRepository {
         val avgDailyAndSpecial =
             reportDAO.howMuchMoneyIsSpentBetween(firstDayOfCurrentMonth, today) /
                     daysSinceStartOfMonth
-        val daysToPayday = if (today.dayOfMonth > paydayOfMonth) {
+        val daysToPayday = getDaysCountToPayday()
+        val moneyToPayday = Money(avgDailyAndSpecial.value * daysToPayday.toBigDecimal())
+
+        return StatisticsReport(avgDaily, avgDailyAndSpecial, daysToPayday, moneyToPayday)
+    }
+
+    private fun getDaysCountToPayday(): Int {
+        var paydayOfMonth = getNextPaydayOfMonth()
+
+        // check edge case
+        if (paydayOfMonth > lastDayOfCurrentMonth.dayOfMonth)
+            paydayOfMonth = lastDayOfCurrentMonth.dayOfMonth
+
+        return if (today.dayOfMonth > paydayOfMonth) {
             today.until(lastDayOfCurrentMonth, ChronoUnit.DAYS).toInt() + paydayOfMonth
         } else {
             today.until(today.withDayOfMonth(paydayOfMonth), ChronoUnit.DAYS).toInt()
         }
-        val moneyToPayday = Money(avgDailyAndSpecial.value * daysToPayday.toBigDecimal())
-
-        return StatisticsReport(avgDaily, avgDailyAndSpecial, daysToPayday, moneyToPayday)
     }
 
     fun getSpendingCurveData(): SpendingCurveData {
