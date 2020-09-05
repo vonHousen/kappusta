@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home,
             R.id.navigation_dashboard,
             R.id.navigation_settings,
-            R.id.navigation_notifications,
+            R.id.navigation_wallets,
             R.id.navigation_authentication,
             R.id.navigation_history
         ))
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener { item ->
             // define custom behaviour on selecting particular fragment
             when (item.itemId) {
-                R.id.navigation_notifications -> {
+                R.id.navigation_wallets -> {
                     isActionBarButtonsVisible.value = true
                     add_button.hide()
                 }

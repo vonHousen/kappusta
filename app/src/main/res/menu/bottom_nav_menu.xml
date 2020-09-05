@@ -5,30 +5,28 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/baseline_home_24"
         android:title="@string/title_home"
         />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@android:drawable/ic_menu_myplaces"
-        android:iconTint="#000000"
-        android:title="@string/title_notifications" />
-
-    <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/baseline_leaderboard_24"
         android:title="@string/title_dashboard" />
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:iconTint="#000000"
-        android:title="@string/title_settings" />
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/baseline_assignment_24"
+        android:title="@string/title_history" />
 
     <item
-        android:id="@+id/navigation_history"
-        android:icon="?attr/actionModePasteDrawable"
-        android:title="@string/title_history" />
+        android:id="@+id/navigation_wallets"
+        android:icon="@drawable/baseline_groups_24"
+        android:title="@string/title_notifications" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/title_settings" />
 
 </menu>
