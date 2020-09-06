@@ -10,7 +10,7 @@ data class WalletOverview(
     var balance: Money,
     var category: String?,
     var walletName: String,
-    var ID: Long
+    val walletID: String
 ) {
 
     fun getBalanceString(): String {

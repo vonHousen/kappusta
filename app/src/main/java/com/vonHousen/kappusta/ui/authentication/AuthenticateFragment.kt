@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.vonHousen.kappusta.MainActivity
 import com.vonHousen.kappusta.R
@@ -40,7 +41,8 @@ class AuthenticateFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        authViewModel = ViewModelProviders.of(this).get(AuthenticateViewModel::class.java)
+        authViewModel =
+            ViewModelProviders.of(requireActivity()).get(AuthenticateViewModel::class.java)
 
         configureGoogleSignIn()
         button_google_sign_in.setOnClickListener {
@@ -61,8 +63,7 @@ class AuthenticateFragment : Fragment() {
             val currentUser = auth.currentUser
             if (currentUser != null) {
                 // User is signed in
-                val parentActivity = (activity as MainActivity)
-                parentActivity.startWithUser(currentUser)
+                startWithUser(currentUser)
             }
         }
     }
@@ -87,6 +88,7 @@ class AuthenticateFragment : Fragment() {
     }
 
     fun signOut() {
+        authViewModel.withdrawUser()
         auth.signOut()
     }
 
@@ -116,7 +118,7 @@ class AuthenticateFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
-                    parent.startWithUser(user!!)
+                    startWithUser(user!!)
                 } else {
                     // If sign in fails, display a message to the user.
                     Snackbar.make(
@@ -127,7 +129,14 @@ class AuthenticateFragment : Fragment() {
             }
     }
 
+    private fun startWithUser(user: FirebaseUser) {
+        val parent = activity as MainActivity
+        authViewModel.setUser(user)
+        parent.startWithUserID(authViewModel.getUserUidHashed())
+    }
 
-
+    fun logOutUser() {
+        signOut()
+    }
 
 }

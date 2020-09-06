@@ -33,7 +33,7 @@ class SettingsFragment : Fragment() {
         settingsViewModel =
             ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         historyViewModel =
-            ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
+            ViewModelProviders.of(requireActivity()).get(HistoryViewModel::class.java)
 
         configureSettingBudgetFields()
         configureLogoutButton()
@@ -57,10 +57,9 @@ class SettingsFragment : Fragment() {
     }
 
     private fun configureLogoutButton() {
-        button_logout.setOnClickListener {
-
-            val parentActivity = (activity as MainActivity)
-            parentActivity.goToLoginFragment(doSignOut = true)
+        button_logout.setOnClickListener {  // TODO configure correct logout
+//            val parentActivity = (activity as MainActivity)
+//            parentActivity.goToLoginFragment(doSignOut = true)
         }
     }
 }

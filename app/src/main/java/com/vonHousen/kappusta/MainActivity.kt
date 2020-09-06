@@ -20,7 +20,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseUser
 import com.vonHousen.kappusta.db.authDB.AuthDB
 import com.vonHousen.kappusta.db.authDB.LocalAuthRepository
 import com.vonHousen.kappusta.db.reportDB.Migrations
@@ -28,7 +27,6 @@ import com.vonHousen.kappusta.db.reportDB.ReportDB
 import com.vonHousen.kappusta.etc.RC_SIGN_IN
 import com.vonHousen.kappusta.ui.authentication.AuthenticateFragment
 import com.vonHousen.kappusta.ui.authentication.AuthenticateFragmentDirections
-import com.vonHousen.kappusta.etc.HashUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -103,9 +101,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goToLoginFragment(doSignOut: Boolean = false) {
-        if (doSignOut) {
-            isLoggedOut = true
-        }
+//        if (doSignOut) {      TODO configure correct logout
+//            isLoggedOut = true
+//            startActivity(Intent(this, MainActivity::class.java))
+//            finishAffinity()
+//            return
+//        }
         val action = AuthenticateFragmentDirections.startAuthenticationFragment(doSignOut)
         findNavController(R.id.nav_host_fragment).navigate(action)
         hideThings()
@@ -206,8 +207,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun startWithUser(user: FirebaseUser) {
-        val uidHashed = HashUtils.sha256(user.uid)
+    fun startWithUserID(uidHashed: String) {
         val dbName = auth_repo.getDBNameForUser(uidHashed)
         configureReportingDatabase(dbName)
         showThings()
