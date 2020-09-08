@@ -94,8 +94,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.action_bar_menu, menu)
         val actionBarAddButton = menu!!.findItem(R.id.action_bar_add_button)
+        val actionBarNotificationsButton = menu.findItem(R.id.action_bar_notifications)
         isActionBarButtonsVisible.observe(this, Observer {
             actionBarAddButton.isVisible = it
+            actionBarNotificationsButton.isVisible = it
         })
         return true
     }

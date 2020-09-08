@@ -10,4 +10,12 @@
         android:title="@string/notifications_add_group"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_bar_notifications"
+        android:icon="@drawable/baseline_emoji_people_24"
+        android:iconTint="#FFFFFF"
+        android:orderInCategory="90"
+        android:title="@string/notifications_add_group"
+        app:showAsAction="always" />
+
 </menu>
