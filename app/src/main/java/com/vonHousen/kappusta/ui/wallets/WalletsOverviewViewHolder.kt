@@ -8,9 +8,9 @@ import com.vonHousen.kappusta.R
 import com.vonHousen.kappusta.walletSharing.WalletOverview
 
 
-class WalletsViewHolder(inflater: LayoutInflater, parent: ViewGroup)
+class WalletsOverviewViewHolder(inflater: LayoutInflater, parent: ViewGroup)
     : RecyclerView.ViewHolder(
-        inflater.inflate(R.layout.fragment_wallets_item_row, parent, false)
+        inflater.inflate(R.layout.fragment_wallets_overview_item_row, parent, false)
     ) {
     private var nameField: TextView? = null
     private var categoryField: TextView? = null
@@ -18,10 +18,10 @@ class WalletsViewHolder(inflater: LayoutInflater, parent: ViewGroup)
     private var balanceField: TextView? = null
 
     init {
-        nameField = itemView.findViewById(R.id.wallets_item_wallet_name)
-        categoryField = itemView.findViewById(R.id.wallets_item_category)
-        lastDateField = itemView.findViewById(R.id.wallets_item_last_date)
-        balanceField = itemView.findViewById(R.id.wallets_item_balance)
+        nameField = itemView.findViewById(R.id.wallets_overview_item_wallet_name)
+        categoryField = itemView.findViewById(R.id.wallets_overview_item_category)
+        lastDateField = itemView.findViewById(R.id.wallets_overview_item_last_date)
+        balanceField = itemView.findViewById(R.id.wallets_overview_item_balance)
     }
 
     fun bind(walletOverview: WalletOverview) {

@@ -7,25 +7,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vonHousen.kappusta.walletSharing.WalletOverview
 
 
-class WalletsListAdapter(
+class WalletsOverviewListAdapter(
     private val list: MutableList<WalletOverview>,
-    private val whomNotify: WalletsViewModel,
+    private val whomNotify: WalletsOverviewViewModel,
     private val onClickListener: (View, WalletOverview) -> Unit
-) : RecyclerView.Adapter<WalletsViewHolder>() {
+) : RecyclerView.Adapter<WalletsOverviewViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletsOverviewViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return WalletsViewHolder(
+        return WalletsOverviewViewHolder(
             inflater,
             parent
         )
     }
 
-    override fun onBindViewHolder(holder: WalletsViewHolder, position: Int) {
+    override fun onBindViewHolder(holderOverview: WalletsOverviewViewHolder, position: Int) {
         val walletOverview = list[position]
-        holder.bind(walletOverview)
+        holderOverview.bind(walletOverview)
 
-        holder.itemView.setOnClickListener { view ->
+        holderOverview.itemView.setOnClickListener { view ->
             onClickListener.invoke(view, walletOverview)
         }
     }

@@ -12,20 +12,20 @@ import com.vonHousen.kappusta.R
 import com.vonHousen.kappusta.etc.CategoriesParser
 import com.vonHousen.kappusta.ui.authentication.AuthenticateViewModel
 import com.vonHousen.kappusta.walletSharing.WalletOverview
-import kotlinx.android.synthetic.main.fragment_wallets.*
+import kotlinx.android.synthetic.main.fragment_wallets_overview.*
 
 
-class WalletsFragment : Fragment() {
+class WalletsOverviewFragment : Fragment() {
 
-    private lateinit var walletsViewModel: WalletsViewModel
+    private lateinit var walletsOverviewViewModel: WalletsOverviewViewModel
     private lateinit var authViewModel: AuthenticateViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_wallets, container, false)
+        return inflater.inflate(R.layout.fragment_wallets_overview, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,31 +33,30 @@ class WalletsFragment : Fragment() {
 
         authViewModel =
             ViewModelProviders.of(requireActivity()).get(AuthenticateViewModel::class.java)
-        walletsViewModel =
-            ViewModelProviders.of(this).get(WalletsViewModel::class.java)
-        walletsViewModel.setCategoriesParser(
+        walletsOverviewViewModel =
+            ViewModelProviders.of(this).get(WalletsOverviewViewModel::class.java)
+        walletsOverviewViewModel.setCategoriesParser(
             CategoriesParser(resources.getStringArray(R.array.Categories))
         )
-        walletsViewModel.setParent(this)
-        walletsViewModel.registerUser(
+        walletsOverviewViewModel.setParent(this)
+        walletsOverviewViewModel.registerUser(
             uid = authViewModel.getUserUid(),
             email = authViewModel.getUserEmail()
         )
-        walletsViewModel.walletsList.observe(viewLifecycleOwner, Observer {
+        walletsOverviewViewModel.walletsList.observe(viewLifecycleOwner, Observer {
             updateRecyclerView(it)
         })
     }
 
     private fun updateRecyclerView(walletsList: List<WalletOverview>?) {
         if (walletsList != null) {
-
             val actionOnClick: (View, WalletOverview) -> Unit = { view, walletOverview ->
-                toastMessage("No touching!")
+                openWallet(walletOverview)
             }
-
-            val wallets = walletsViewModel.getWalletsWithParsedCategories(walletsList)
-            val customAdapter = WalletsListAdapter(wallets, walletsViewModel, actionOnClick)
-            wallets_recycler_view.apply {
+            val wallets = walletsOverviewViewModel.getWalletsWithParsedCategories(walletsList)
+            val customAdapter =
+                WalletsOverviewListAdapter(wallets, walletsOverviewViewModel, actionOnClick)
+            wallets_overview_recycler_view.apply {
                 layoutManager = LinearLayoutManager(activity)
                 adapter = customAdapter
             }
@@ -67,5 +66,9 @@ class WalletsFragment : Fragment() {
     fun toastMessage(msg: String) {
         val parentActivity = activity as MainActivity
         Toast.makeText(parentActivity, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openWallet(walletOverview: WalletOverview) {
+        toastMessage("No touching yet!")    // TODO replace with opening WalletFragment
     }
 }

@@ -48,6 +48,7 @@ class ReportingFragment : Fragment() {
         configureCategorySpinner()
         configureDatePickerDialog()
         configureTags()
+        reporting_split_button.visibility = View.GONE       // TODO implement set on click listener
     }
 
     private fun reportNow() {

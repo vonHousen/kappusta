@@ -15,10 +15,10 @@ import com.vonHousen.kappusta.walletSharing.UsersWallet
 import com.vonHousen.kappusta.walletSharing.Wallet
 import com.vonHousen.kappusta.walletSharing.WalletOverview
 
-class WalletsViewModel : ViewModel() {
+class WalletsOverviewViewModel : ViewModel() {
 
     private lateinit var categoriesParser: CategoriesParser
-    private lateinit var parentFragment: WalletsFragment
+    private lateinit var parentOverviewFragment: WalletsOverviewFragment
 
     private val db = Firebase.database
 
@@ -44,8 +44,8 @@ class WalletsViewModel : ViewModel() {
         this.categoriesParser = categoriesParser
     }
 
-    fun setParent(walletsFragment: WalletsFragment) {
-        parentFragment = walletsFragment
+    fun setParent(walletsOverviewFragment: WalletsOverviewFragment) {
+        parentOverviewFragment = walletsOverviewFragment
     }
 
     fun getWalletsWithParsedCategories(walletList: List<WalletOverview>)
@@ -109,7 +109,7 @@ class WalletsViewModel : ViewModel() {
             override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
             }
             override fun onCancelled(databaseError: DatabaseError) {
-                parentFragment.toastMessage("Failed to load user's wallets.")
+                parentOverviewFragment.toastMessage("Failed to load user's wallets.")
             }
         }
         thisUsersWallets.addChildEventListener(childEventListener)
