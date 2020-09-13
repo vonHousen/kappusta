@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         val actionBarNotificationsButton = menu.findItem(R.id.action_bar_notifications)
         isActionBarButtonsVisible.observe(this, Observer {
             actionBarAddButton.isVisible = it
-            actionBarNotificationsButton.isVisible = it
+            actionBarNotificationsButton.isVisible = it     // TODO show it only if there are notifications
         })
         return true
     }

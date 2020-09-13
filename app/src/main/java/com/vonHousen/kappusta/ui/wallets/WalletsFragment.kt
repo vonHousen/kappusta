@@ -50,8 +50,13 @@ class WalletsFragment : Fragment() {
 
     private fun updateRecyclerView(walletsList: List<WalletOverview>?) {
         if (walletsList != null) {
+
+            val actionOnClick: (View, WalletOverview) -> Unit = { view, walletOverview ->
+                toastMessage("No touching!")
+            }
+
             val wallets = walletsViewModel.getWalletsWithParsedCategories(walletsList)
-            val customAdapter = WalletsListAdapter(wallets, walletsViewModel)
+            val customAdapter = WalletsListAdapter(wallets, walletsViewModel, actionOnClick)
             wallets_recycler_view.apply {
                 layoutManager = LinearLayoutManager(activity)
                 adapter = customAdapter
@@ -61,7 +66,6 @@ class WalletsFragment : Fragment() {
 
     fun toastMessage(msg: String) {
         val parentActivity = activity as MainActivity
-        Toast.makeText(parentActivity, msg,
-            Toast.LENGTH_SHORT).show()
+        Toast.makeText(parentActivity, msg, Toast.LENGTH_SHORT).show()
     }
 }

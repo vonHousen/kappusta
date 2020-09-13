@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.vonHousen.kappusta.etc.CategoriesParser
+import com.vonHousen.kappusta.etc.SwipeToDeleteCallback
 import com.vonHousen.kappusta.reporting.ReportRecord
 
 

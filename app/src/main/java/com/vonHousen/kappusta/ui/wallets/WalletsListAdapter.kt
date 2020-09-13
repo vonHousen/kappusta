@@ -1,14 +1,17 @@
 package com.vonHousen.kappusta.ui.wallets
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vonHousen.kappusta.walletSharing.WalletOverview
 
 
-class WalletsListAdapter(private val list: MutableList<WalletOverview>,
-                         private val whomNotify: WalletsViewModel)
-    : RecyclerView.Adapter<WalletsViewHolder>() {
+class WalletsListAdapter(
+    private val list: MutableList<WalletOverview>,
+    private val whomNotify: WalletsViewModel,
+    private val onClickListener: (View, WalletOverview) -> Unit
+) : RecyclerView.Adapter<WalletsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -19,8 +22,12 @@ class WalletsListAdapter(private val list: MutableList<WalletOverview>,
     }
 
     override fun onBindViewHolder(holder: WalletsViewHolder, position: Int) {
-        val report = list[position]
-        holder.bind(report)
+        val walletOverview = list[position]
+        holder.bind(walletOverview)
+
+        holder.itemView.setOnClickListener { view ->
+            onClickListener.invoke(view, walletOverview)
+        }
     }
 
     override fun getItemCount(): Int = list.size

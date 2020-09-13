@@ -1,4 +1,4 @@
-package com.vonHousen.kappusta.ui.history
+package com.vonHousen.kappusta.etc
 
 /*
 Author: kitek

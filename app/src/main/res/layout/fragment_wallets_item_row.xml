@@ -6,11 +6,13 @@
     android:orientation="vertical"
     android:layout_gravity="center_horizontal"
     android:padding="12dp"
-    android:background="@drawable/rounded_field"
+    android:background="@drawable/rounded_field_rippled"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
+    android:focusable="true"
+    android:clickable="true"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
